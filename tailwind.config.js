@@ -16,6 +16,7 @@ export default {
         "@F4A261": "#F4A261",
         "@E76F51": "#E76F51",
         "@EFF1F3": "#EFF1F3",
+        "@1F7168": "#1F7168",
       },
     },
     borderRadius: {
