@@ -1,16 +1,8 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { MdShoppingCart, MdLogout } from "react-icons/md";
-import { GiHamburgerMenu, GiBookmark, GiWhiteBook } from "react-icons/gi";
-import { RiLogoutBoxFill } from "react-icons/ri";
-import {
-  FaUserTie,
-  FaUpload,
-  FaArrowLeft,
-  FaChevronLeft,
-  FaBook,
-} from "react-icons/fa";
-import { VscChevronLeft } from "react-icons/vsc";
+import { GiBookmark } from "react-icons/gi";
+import { FaUserTie, FaUpload, FaChevronLeft, FaBook } from "react-icons/fa";
 
 export const Navbar: FC = () => {
   return (
