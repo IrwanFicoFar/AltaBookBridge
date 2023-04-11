@@ -32,7 +32,7 @@ const Router: FC = () => {
       element: <DetailBook />,
     },
     {
-      path: "/borrow-book",
+      path: "/borrow-books",
       element: <ListBorrowBook />,
     },
 

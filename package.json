@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@preline/dropdown": "^1.3.0",
     "axios": "^1.3.5",
     "preline": "^1.7.0",
     "react": "^18.2.0",
