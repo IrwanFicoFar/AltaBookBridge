@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { FC } from "react";
+import axios from "axios";
 
+import DetailPokemon from "../pages/DetailPokemon";
 import Home from "../pages";
-import DetailBook from "../pages/detailBook";
-import ProfileUser from "../pages/ProfileUser";
-import ListBorrowBook from "../pages/listBorrowBook";
-import CartBorrowBook from "../pages/CartBorrowBook";
-import UploadBook from "../pages/UploadBook";
-import ListMyBook from "../pages/listMyBook";
+import ListPokemon from "../pages/ListPokemon";
+import Catch from "../pages/Catch";
+
+axios.defaults.baseURL = "https://pokeapi.co/api/v2/pokemon";
 
 const Router: FC = () => {
   const router = createBrowserRouter([
@@ -16,32 +16,18 @@ const Router: FC = () => {
       element: <Home />,
     },
     {
-      path: "/users",
-      element: <ProfileUser />,
+      path: "/:id",
+      element: <DetailPokemon />,
     },
     {
-      path: "/books",
-      element: <ListMyBook />,
+      path: "/list",
+      element: <ListPokemon />,
     },
     {
-      path: "/upload-book",
-      element: <UploadBook />,
-    },
-    {
-      path: "/detail-book",
-      element: <DetailBook />,
-    },
-    {
-      path: "/borrow-book",
-      element: <ListBorrowBook />,
-    },
-
-    {
-      path: "/cart",
-      element: <CartBorrowBook />,
+      path: "/:id/:name",
+      element: <Catch />,
     },
   ]);
-
   return <RouterProvider router={router} />;
 };
 
