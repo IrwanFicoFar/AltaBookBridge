@@ -9,7 +9,7 @@ interface Props {
 export const Layout: FC<Props> = (props) => {
   const { children } = props;
   return (
-    <div className="h-screen bg-slate-500">
+    <div className="h-screen ">
       <Navbar />
       {children}
       <Footer />
