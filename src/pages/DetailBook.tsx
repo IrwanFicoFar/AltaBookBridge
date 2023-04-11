@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { Layout } from "../components/Layout";
 
-const Home: FC = () => {
+const DetailBook: FC = () => {
   return (
     <Layout>
       <div>
-        <h1>Home Page</h1>
+        <h1>Detail Book Page</h1>
       </div>
     </Layout>
   );
 };
 
-export default Home;
+export default DetailBook;

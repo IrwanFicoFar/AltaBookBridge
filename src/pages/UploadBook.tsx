@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { Layout } from "../components/Layout";
 
-const Home: FC = () => {
+const UploadBook: FC = () => {
   return (
     <Layout>
       <div>
-        <h1>Home Page</h1>
+        <h1>Upload BookPage</h1>
       </div>
     </Layout>
   );
 };
 
-export default Home;
+export default UploadBook;
