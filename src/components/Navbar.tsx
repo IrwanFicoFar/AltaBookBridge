@@ -12,9 +12,12 @@ export const Navbar: FC = () => {
         aria-label="Global"
       >
         <div className="flex items-center justify-between">
-          <a className="flex-none text-2xl font-bold text-@EFF1F3 dark:text-white">
-            Alta Book Bridge
-          </a>
+          <Link to="/">
+            <p className="flex w-56 text-2xl font-bold text-@EFF1F3 hover:text-white dark:text-white">
+              Alta Book Bridge
+            </p>
+          </Link>
+
           <div className="sm:hidden">
             <button
               type="button"
