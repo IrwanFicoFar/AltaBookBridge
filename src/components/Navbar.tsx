@@ -1,15 +1,43 @@
-import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { FC, useEffect, useState, MouseEventHandler } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { MdShoppingCart, MdLogout, MdLogin } from "react-icons/md";
 import { GiBookmark } from "react-icons/gi";
 import { FaUserTie, FaUpload, FaChevronLeft, FaBook } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 export const Navbar: FC = () => {
   const [login, setLogin] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setLogin(true);
   }, []);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "If You Logout, all your data in cart will be removed",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Log Out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        setLogin(false);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Success Log Out",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
+    });
+  };
 
   const navAfterLogin = () => {
     return (
@@ -55,7 +83,7 @@ export const Navbar: FC = () => {
               </h3>
             </Link>
 
-            <Link to="/upload-book">
+            <Link to="/upload-book/:username">
               <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                 <FaUpload />
                 Upload Book
@@ -78,7 +106,7 @@ export const Navbar: FC = () => {
                   </h3>
                 </Link>
 
-                <Link to="/borrow-books">
+                <Link to="/borrow-books/:username">
                   <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                     <FaBook />
                     My Borrow Books
@@ -87,7 +115,10 @@ export const Navbar: FC = () => {
               </div>
             </div>
 
-            <button className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+            <button
+              className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+              onClick={() => handleLogout()}
+            >
               <MdLogout className="text-lg" />
               Log Out
             </button>

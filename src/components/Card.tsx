@@ -90,7 +90,7 @@ export const CardBorrowBook: FC<PropsBorrowBook> = (props) => {
     <div className="flex flex-col rounded-yes bg-@2A9D8F border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
       <img
         className="w-full h-auto rounded-yes"
-        src="./download.jpeg"
+        src="/download.jpeg"
         alt="Image Description"
       />
       <div className="pb-4 md:pb-5">
