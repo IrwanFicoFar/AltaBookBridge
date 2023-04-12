@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { FC } from "react";
 
 import Home from "../pages";
+import Login from "../pages/auth/Login";
 import DetailBook from "../pages/DetailBook";
 import ProfileUser from "../pages/ProfileUser";
 import ListBorrowBook from "../pages/ListBorrowBook";
@@ -14,6 +15,10 @@ const Router: FC = () => {
     {
       path: "/",
       element: <Home />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
     },
     {
       path: "/users",
