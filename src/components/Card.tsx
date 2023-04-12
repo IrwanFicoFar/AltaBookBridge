@@ -17,6 +17,12 @@ interface PropsBorrowBook {
   Time: string;
 }
 
+interface CardCartBorrowBook {
+  Title: string;
+  Owner: string;
+  Time: string;
+}
+
 export const CardLanding: FC<PropsHandling> = (props) => {
   const { KindOfHandle, Title, Owner } = props;
   return (
@@ -88,6 +94,60 @@ export const CardBorrowBook: FC<PropsBorrowBook> = (props) => {
           <h3 className="text-@EFF1F3 text-md ">
             Duration : <span className="text-@E76F51">{Time}</span>
           </h3>
+        </div>
+      </div>
+    </div>
+    //   {/* card end*/}
+  );
+};
+
+export const CardCartBorrowBook: FC<CardCartBorrowBook> = (props) => {
+  const { Title, Owner, Time } = props;
+  return (
+    //   {/* card start*/}
+    <div className="flex border-b-4 py-10 px-12 shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+      <img
+        className="w-auto h-44 rounded-lg"
+        src="./download.jpeg"
+        alt="Image Description"
+      />
+      <div className="pb-4 md:pb-5 ml-7">
+        <div className="flex flex-col">
+          <div className="-m-1.5 overflow-x-auto">
+            <div className="p-1.5 min-w-full inline-block align-middle">
+              <div className="overflow-hidden">
+                <table className="min-w-full">
+                  <thead></thead>
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                    <tr>
+                      <td className="px-3 py-3 whitespace-nowrap text-md font-semibold text-@264653 dark:text-gray-200">
+                        Title
+                      </td>
+                      <td className="py-3 whitespace-nowrap text-md text-@264653 dark:text-gray-200">
+                        : {Title}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-3 whitespace-nowrap text-md font-semibold text-gray-800 dark:text-gray-200">
+                        Owner
+                      </td>
+                      <td className="py-3 whitespace-nowrap text-md text-@264653 dark:text-gray-200">
+                        : {Owner}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-3 whitespace-nowrap text-md font-semibold text-@264653 dark:text-gray-200">
+                        Durations
+                      </td>
+                      <td className="py-3 whitespace-nowrap text-md text-@264653 dark:text-gray-200">
+                        : <span className="text-@E76F51">{Time}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
