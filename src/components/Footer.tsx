@@ -6,7 +6,7 @@ export const Footer: FC = () => {
       <footer className="bg-@2A9D8F">
         <div className="max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
           {/* <!-- Grid --> */}
-          <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ">
             <div className="col-span-full lg:col-span-1">
               <a
                 className="flex-none text-xl font-semibold text-@EFF1F3 hover:text-white"
@@ -105,7 +105,7 @@ export const Footer: FC = () => {
             {/* <!-- Social Brands --> */}
             <div>
               <a
-                className="inline-flex justify-center items-center gap-x-3.5 w-10 h-10 text-center text-gray-200 hover:bg-white/[.1] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-900 transition"
+                className="inline-flex justify-center items-center gap-x-3.5 w-10 h-10 text-center text-gray-200 hover:bg-white/[.1] rounded-md "
                 href="#"
               >
                 <svg

@@ -34,7 +34,7 @@ export const Navbar: FC = () => {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
                 />
               </svg>
@@ -54,14 +54,13 @@ export const Navbar: FC = () => {
           id="navbar-with-mega-menu"
           className="hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
         >
-          <div className="flex flex-col gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
+          <div className="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 xl:gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
             <Link to="/cart">
-              <a className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
+              <h3 className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
                 <MdShoppingCart className="text-2xl " />
                 Cart
-              </a>
+              </h3>
             </Link>
-
             <div className="hs-dropdown relative inline-flex">
               <button
                 id="hs-dropdown"
@@ -80,8 +79,8 @@ export const Navbar: FC = () => {
                   <path
                     d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   />
                 </svg>
               </button>
@@ -91,17 +90,17 @@ export const Navbar: FC = () => {
                 aria-labelledby="hs-dropdown-basic"
               >
                 <Link to="/users">
-                  <a className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                  <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                     <FaUserTie />
                     Profile
-                  </a>
+                  </h3>
                 </Link>
 
                 <Link to="/upload-book">
-                  <a className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                  <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                     <FaUpload />
                     Upload Book
-                  </a>
+                  </h3>
                 </Link>
                 <div className="hs-dropdown relative [--strategy:static] sm:[--strategy:absolute] [--adaptive:none]">
                   <button
@@ -112,19 +111,19 @@ export const Navbar: FC = () => {
                     List Of Book
                   </button>
 
-                  <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 sm:mt-2 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute sm:border before:-right-5 before:top-0 before:h-full before:w-5 top-0 right-full !mx-[10px]">
+                  <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 sm:mt-2 bg-white sm:drop-shadow-md drop-shadow-lg  rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute sm:border before:-right-5 before:top-0 before:h-full before:w-5 top-0 right-full !mx-[10px]">
                     <Link to="/books">
-                      <a className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                      <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                         <GiBookmark />
                         My Books
-                      </a>
+                      </h3>
                     </Link>
 
                     <Link to="/borrow-books">
-                      <a className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                      <h3 className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                         <FaBook />
                         My Borrow Books
-                      </a>
+                      </h3>
                     </Link>
                   </div>
                 </div>
