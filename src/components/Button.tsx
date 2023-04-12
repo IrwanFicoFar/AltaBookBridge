@@ -1,17 +1,15 @@
 import { FC } from "react";
 
 interface Props {
-  navigator: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const ButtonBorrow: FC<Props> = (props) => {
-  const { navigator } = props;
+  const { navigator, onClick } = props;
   return (
     <button
       className="mt-3 py-3 px-4 inline-flex justify-center items-center rounded-md text-md font-semibold bg-@EFF1F3 text-@2A9D8F hover:bg-white focus:outline-none transition-all drop-shadow-lg hover:drop-shadow-xl dark:focus:ring-offset-gray-800"
-      onClick={() => {
-        navigator;
-      }}
+      onClick={onClick}
     >
       Borrow
     </button>
