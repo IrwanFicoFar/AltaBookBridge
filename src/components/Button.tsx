@@ -26,8 +26,18 @@ export const ButtonUnavailable: FC = () => {
   );
 };
 
-export const ButtonDelete: FC = () => {
-  return <div>Button</div>;
+export const ButtonCart: FC<Props> = (props) => {
+  const { navigator } = props;
+  return (
+    <button
+      className="mt-3 py-3 px-4 inline-flex justify-center items-center rounded-md text-md font-semibold bg-@2A9D8F text-@EFF1F3 hover:bg-@264653 focus:outline-none transition-all drop-shadow-lg hover:drop-shadow-xl dark:focus:ring-offset-gray-800"
+      onClick={() => {
+        navigator;
+      }}
+    >
+      Proccess
+    </button>
+  );
 };
 
 export const ButtonEdit: FC = () => {
