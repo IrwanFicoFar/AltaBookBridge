@@ -8,13 +8,13 @@ export const Navbar: FC = () => {
   const [login, setLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    setLogin(false);
+    setLogin(true);
   }, []);
 
   const navAfterLogin = () => {
     return (
       <div className="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 xl:gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
-        <Link to="/cart">
+        <Link to="/cart/:username">
           <h3 className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
             <MdShoppingCart className="text-2xl " />
             Cart
