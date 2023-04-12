@@ -1,59 +1,53 @@
 import { FC } from "react";
 import { Layout } from "../components/Layout";
 import { CardCartBorrowBook } from "../components/Card";
+import { ButtonCart } from "../components/Button";
 
-const CartBorrowBook: FC = () => {
+const CardBorrowBook: FC = () => {
   return (
     <Layout>
-      <div className=" px-20 py-20 flex justify-between">
-        <div className="w-[70%]">
-          <h1 className=" font-bold text-md  md:texl-lg xl:text-xl  uppercase flex flex-col ">
-            Bucket of borrowed books
-            <span className="border-b-4 w-full "></span>
-          </h1>
-          <CardCartBorrowBook
-            Title="JS Code learning"
-            Owner="Kristain"
-            Time="7 Days"
-          />
-        </div>
-        {/* <div className="">
-          <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-            <div className="p-4 md:p-7">
-              <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-                Card title
-              </h3>
-              <p className="mt-2 text-gray-800 dark:text-gray-400">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a
-                className="mt-3 inline-flex items-center gap-2 mt-5 text-sm font-medium text-blue-500 hover:text-blue-700"
-                href="#"
-              >
-                Card link
-                <svg
-                  className="w-2.5 h-auto"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </a>
+      <div className=" px-6 py-6 md-to-lg:pb-10 md:pb-16 md:pt-8 md:px-10 lg:pb-20 lg:pt-10 lg:px-20 gap-1 ">
+        <h1 className=" font-bold text-md  md:texl-lg xl:text-xl  uppercase flex flex-col ">
+          Bucket of borrowed books
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md-to-lg:grid-cols-2  md:flex-row ">
+          <div className="w-full">
+            <CardCartBorrowBook
+              Title="JS Code learning"
+              Owner="Kristain"
+              Time="7 Days"
+            />
+            <CardCartBorrowBook
+              Title="JS Code learning"
+              Owner="Kristain"
+              Time="7 Days"
+            />
+            <CardCartBorrowBook
+              Title="JS Code learning"
+              Owner="Kristain"
+              Time="7 Days"
+            />
+          </div>
+          <div className=" grid grid-cols-1 justify-center">
+            <div className="p-6 px-8 py-10 sm:py-14 md:py-18 sm:px-20 md:px-40 md-to-lg:px-14 lg:px-15 xl:px-5 2xl:px-20  flex flex-col">
+              <div className="bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md">
+                <h3 className="text-lg font-bold text-@264653 dark:text-white">
+                  Final Proccess to Borrow
+                </h3>
+                <p className="mt-2 text-@264653">
+                  Check each items, to make sure all you borrow in bucket. if
+                  you done, then click below to proccess
+                </p>
+                <div className="mt-4 ">
+                  <ButtonCart navigator="/" />
+                </div>
+              </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </Layout>
   );
 };
 
-export default CartBorrowBook;
+export default CardBorrowBook;
