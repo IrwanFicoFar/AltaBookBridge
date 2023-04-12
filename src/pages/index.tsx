@@ -16,10 +16,9 @@ interface DataType {
 
 const Home: FC = () => {
   const [datas, setDatas] = useState<DataType[]>([]);
-  const [state1, setState] = useState<boolean>(true);
-  const [state2, set2State] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
+  const [status, setStatus] = useState<boolean>();
 
   useEffect(() => {
     fetchAllBook();
@@ -31,7 +30,9 @@ const Home: FC = () => {
       .then((response) => {
         const { data } = response.data;
         setDatas(data);
+
         setUsername(data[0].username);
+        setStatus(data[0].status);
       })
       .catch((error) => {
         const { message } = error.message;
@@ -41,6 +42,10 @@ const Home: FC = () => {
         setLoading(false);
       });
   };
+
+  console.log(status);
+
+  // console.log(datas);
 
   const saveLocalStorage = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -55,6 +60,7 @@ const Home: FC = () => {
       showConfirmButton: false,
       timer: 1500,
     });
+    setStatus(false);
   };
 
   return (
@@ -65,12 +71,13 @@ const Home: FC = () => {
         <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10">
           {datas.map((data) => (
             <CardLanding
+              key={data.username}
               BookImage={data.bookImage}
               MyLink={`/detail-book/${data.username}`}
               Title={data.title}
               Owner={data.username}
               KindOfHandle={
-                data.status ? (
+                status ? (
                   <ButtonBorrow onClick={(event) => saveLocalStorage(event)} />
                 ) : (
                   <ButtonUnavailable />
