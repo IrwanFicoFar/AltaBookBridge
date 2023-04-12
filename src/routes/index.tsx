@@ -38,20 +38,20 @@ const Router: FC = () => {
       element: <ListMyBook />,
     },
     {
-      path: "/upload-book",
+      path: "/upload-book/:username",
       element: <UploadBook />,
     },
     {
-      path: "/detail-book",
+      path: "/detail-book/:username",
       element: <DetailBook />,
     },
     {
-      path: "/borrow-books",
+      path: "/borrow-books/:username",
       element: <ListBorrowBook />,
     },
 
     {
-      path: "/cart",
+      path: "/cart/:username",
       element: <CartBorrowBook />,
     },
   ]);
