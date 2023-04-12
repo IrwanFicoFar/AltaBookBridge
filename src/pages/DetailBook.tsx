@@ -58,7 +58,7 @@ const UploadBook: FC = () => {
                     <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all md:max-w-2xl md:w-full m-3 md:mx-auto">
                       <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
                         <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
-                          Upload Books
+                          Update Books
                         </h1>
                         <div className="grid md:grid-cols-2 justify-center">
                           <div className="">
@@ -105,7 +105,7 @@ const UploadBook: FC = () => {
                             </div>
                             <div className="w-fit">
                               <button className="py-1 px-2 m-1 justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-semibold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                                Submit
+                                Update
                               </button>
                             </div>
                           </div>
