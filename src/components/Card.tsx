@@ -1,9 +1,11 @@
 import { FC, ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface PropsHandling {
   KindOfHandle: ReactNode;
   Title: string;
   Owner: string;
+  MyLink: string;
 }
 
 interface PropsMyListBook {
@@ -24,7 +26,7 @@ interface CardCartBorrowBook {
 }
 
 export const CardLanding: FC<PropsHandling> = (props) => {
-  const { KindOfHandle, Title, Owner } = props;
+  const { KindOfHandle, Title, Owner, MyLink } = props;
   return (
     //   {/* card start*/}
     <div className="flex flex-col rounded-yes bg-@2A9D8F border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
@@ -33,10 +35,14 @@ export const CardLanding: FC<PropsHandling> = (props) => {
         src="./download.jpeg"
         alt="Image Description"
       />
+
       <div className="p-4 md:p-5">
-        <h3 className="text-md font-bold text-@EFF1F3 hover:text-white dark:text-white">
-          {Title}
-        </h3>
+        <Link to={MyLink}>
+          <h3 className="text-md font-bold text-@EFF1F3 hover:text-white dark:text-white">
+            {Title}
+          </h3>
+        </Link>
+
         <h3 className="mt-1 text-@EFF1F3 hover:text-white dark:text-gray-400">
           Owner : {Owner}
         </h3>
