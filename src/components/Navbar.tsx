@@ -8,7 +8,7 @@ export const Navbar: FC = () => {
   const [login, setLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    setLogin(true);
+    setLogin(false);
   }, []);
 
   const navAfterLogin = () => {

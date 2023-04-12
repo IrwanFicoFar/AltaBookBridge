@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { FC } from "react";
+import axios from "axios";
 
 import Home from "../pages";
 import Login from "../pages/auth/Login";
@@ -10,6 +11,9 @@ import ListBorrowBook from "../pages/ListBorrowBook";
 import CartBorrowBook from "../pages/CartBorrowBook";
 import UploadBook from "../pages/UploadBook";
 import ListMyBook from "../pages/ListMyBook";
+
+axios.defaults.baseURL =
+  "https://virtserver.swaggerhub.com/MUJAHID170997/BookBridgeAPI/1.0.0";
 
 const Router: FC = () => {
   const router = createBrowserRouter([
