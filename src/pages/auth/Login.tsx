@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 const Login: FC = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth > 767);
+      setIsMobile(window.innerWidth <= 768);
     };
-
+    handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -21,13 +20,11 @@ const Login: FC = () => {
 
   return (
     <Layout>
-      <div className="grid md:grid-cols-2 bg-slate-100">
-        {isDesktop ? (
+      <div className="grid md:grid-cols-2 lg:grid-cols-2 bg-slate-100">
+        {!isMobile && (
           <div className="">
             <img src="./bg.jpg" alt="" className="w-full h-full" />
           </div>
-        ) : (
-          ""
         )}
         <div className="flex  m-10 lg:m-10 justify-center items-center  dark:bg-slate-800  rounded-2xl">
           <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-[5%]">

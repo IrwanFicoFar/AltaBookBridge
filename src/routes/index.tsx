@@ -3,6 +3,7 @@ import { FC } from "react";
 
 import Home from "../pages";
 import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
 import DetailBook from "../pages/DetailBook";
 import ProfileUser from "../pages/ProfileUser";
 import ListBorrowBook from "../pages/ListBorrowBook";
@@ -19,6 +20,10 @@ const Router: FC = () => {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
     {
       path: "/users",
