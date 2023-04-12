@@ -6,12 +6,12 @@ import { ButtonCart } from "../components/Button";
 const CardBorrowBook: FC = () => {
   return (
     <Layout>
-      <div className=" px-20 py-20 gap-16">
+      <div className=" px-6 py-6 md-to-lg:pb-10 md:pb-16 md:pt-8 md:px-10 lg:pb-20 lg:pt-10 lg:px-20 gap-1 ">
         <h1 className=" font-bold text-md  md:texl-lg xl:text-xl  uppercase flex flex-col ">
           Bucket of borrowed books
         </h1>
-        <div className="flex justify-between">
-          <div className="w-[70%]">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md-to-lg:grid-cols-2  md:flex-row ">
+          <div className="w-full">
             <CardCartBorrowBook
               Title="JS Code learning"
               Owner="Kristain"
@@ -28,18 +28,18 @@ const CardBorrowBook: FC = () => {
               Time="7 Days"
             />
           </div>
-          <div className=" flex justify-center h-[50%]">
-            <div className=" bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-              <div className="p-4 md:p-7 flex flex-col">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-                  Card title
+          <div className=" grid grid-cols-1 justify-center">
+            <div className="p-6 px-8 py-10 sm:py-14 md:py-18 sm:px-20 md:px-40 md-to-lg:px-14 lg:px-15 xl:px-5 2xl:px-20  flex flex-col">
+              <div className="bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md">
+                <h3 className="text-lg font-bold text-@264653 dark:text-white">
+                  Final Proccess to Borrow
                 </h3>
-                <p className="mt-2 text-gray-800 dark:text-gray-400">
+                <p className="mt-2 text-@264653">
                   Check each items, to make sure all you borrow in bucket. if
                   you done, then click below to proccess
                 </p>
-                <div>
-                  <ButtonCart navigator="" />
+                <div className="mt-4 ">
+                  <ButtonCart navigator="/" />
                 </div>
               </div>
             </div>
