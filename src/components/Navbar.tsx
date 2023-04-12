@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { MdShoppingCart, MdLogout } from "react-icons/md";
+import { MdShoppingCart, MdLogout, MdLogin } from "react-icons/md";
 import { GiBookmark } from "react-icons/gi";
 import { FaUserTie, FaUpload, FaChevronLeft, FaBook } from "react-icons/fa";
 
@@ -127,11 +127,12 @@ export const Navbar: FC = () => {
                     </Link>
                   </div>
                 </div>
-
-                <button className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
-                  <MdLogout className="text-lg" />
-                  Log Out
-                </button>
+                <Link to="/login">
+                  <button className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                    <MdLogin className="text-lg" />
+                    Log in
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

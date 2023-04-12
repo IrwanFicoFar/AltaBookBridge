@@ -34,7 +34,7 @@ const Login: FC = () => {
             <div>
               <label className="font-bold">Username</label>
               <Input
-                placeholder="Insert your usernmae"
+                placeholder="Insert your username"
                 id="input-uname"
                 type="username"
               />
