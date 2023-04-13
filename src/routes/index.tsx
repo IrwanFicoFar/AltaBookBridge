@@ -16,7 +16,6 @@ import ListBorrowBook from "../pages/ListBorrowBook";
 import CartBorrowBook from "../pages/CartBorrowBook";
 import UploadBook from "../pages/UploadBook";
 import ListMyBook from "../pages/ListMyBook";
-import axios from "axios";
 
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/MUJAHID170997/BookBridgeAPI/1.0.0";

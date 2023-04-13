@@ -1,4 +1,3 @@
-
 import { FC, useEffect, useState, FormEvent } from "react";
 import { Layout } from "../components/Layout";
 import { useNavigate } from "react-router-dom";
@@ -10,16 +9,16 @@ import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 
 const UploadBook: FC = () => {
- const [cookie, , removeCookie] = useCookies(["token", "uname"]);
+  const [cookie] = useCookies(["token"]);
   const [falseUsername, setFalseUsername] = useState<boolean>(false);
-  const getUname = cookie.uname;
+  const checkToken = cookie.token;
   const [bookSubmit, setBookSubmit] = useState<Partial<BookType>>({});
   const [data, setData] = useState<Partial<BookType>>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const params = useParams();
   const navigate = useNavigate();
-  
-    useEffect(() => {
+
+  useEffect(() => {
     setFalseUsername(true);
   }, []);
 
@@ -130,7 +129,7 @@ const UploadBook: FC = () => {
                   <p className="text-sm leading-4">{data.description}</p>
                 </div>
                 <div className="flex w-full">
-                  {falseUsername ? (
+                  {checkToken ? (
                     <button
                       type="button"
                       className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
@@ -141,7 +140,7 @@ const UploadBook: FC = () => {
                   ) : (
                     <></>
                   )}
-                  {falseUsername ? (
+                  {checkToken ? (
                     <button
                       type="button"
                       className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
