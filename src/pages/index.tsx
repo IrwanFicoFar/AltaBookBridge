@@ -1,7 +1,7 @@
-import { FC, useEffect, useState, FormEvent } from "react";
+import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 import { Layout } from "../components/Layout";
 import { CardLanding } from "../components/Card";
@@ -14,11 +14,20 @@ interface DataType {
   username: string;
 }
 
+const override: CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "middle",
+  margin: "0 auto",
+  backgroundColor: "",
+};
+
 const Home: FC = () => {
   const [datas, setDatas] = useState<DataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [status, setStatus] = useState<boolean>();
+  let [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     fetchAllBook();
@@ -39,7 +48,7 @@ const Home: FC = () => {
         alert(message);
       })
       .finally(() => {
-        setLoading(false);
+        setLoading(true);
       });
   };
 
@@ -67,9 +76,18 @@ const Home: FC = () => {
     <Layout>
       <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10"></div>
       {loading ? (
-        <div>Loading...</div>
+        <div>
+          <PropagateLoader
+            color={color}
+            loading={loading}
+            cssOverride={override}
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
       ) : (
-        <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10">
+        <div>
           {datas.map((data) => (
             <CardLanding
               key={data.username}
