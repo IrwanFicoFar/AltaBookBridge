@@ -1,13 +1,67 @@
-import { FC } from "react";
+import { FC, useState, useEffect, FormEvent } from "react";
 import { Layout } from "../components/Layout";
 import { Input, TextArea } from "../components/Input";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+interface bookSubmitType {
+  title: string;
+  description: string;
+  book_image: string;
+}
 
 const UploadBook: FC = () => {
+  const [bookSubmit, setBookSubmit] = useState<bookSubmitType>({
+    title: "",
+    description: "",
+    book_image: "",
+  });
+  const [isDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isEmpty = Object.values(bookSubmit).every((val) => {
+      return val !== "";
+    });
+    setIsDisabled(!isEmpty);
+  }, [bookSubmit]);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsDisabled(true);
+    axios
+      .post(`books`, bookSubmit)
+      .then((response) => {
+        const { data, message } = response.data;
+        Swal.fire({
+          title: "Success",
+          text: message,
+          showCancelButton: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/upload-book");
+          }
+        });
+      })
+      .catch((error) => {
+        const { data } = error.response;
+        Swal.fire({
+          title: "Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setIsDisabled(false));
+  }
+
   return (
     <Layout>
       <div className="flex justify-center items-center bg-slate-100">
         <div className="grid col-span-2 m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
-          <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
+          <form
+            className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large"
+            onSubmit={(event) => handleSubmit(event)}
+          >
             <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
               Upload Books
             </h1>
@@ -23,7 +77,7 @@ const UploadBook: FC = () => {
                 <div className="p-2 w-40">
                   <label className="block">
                     <span className="sr-only">Choose profile photo</span>
-                    <input
+                    <Input
                       type="file"
                       className=" w-fit block text-sm text-gray-500
       file:mr-4 file:py-2 file:px-4
@@ -32,6 +86,12 @@ const UploadBook: FC = () => {
       file:bg-@2A9D8F file:text-white
       hover:file:bg-@1F7168
     "
+                      onChange={(event) =>
+                        setBookSubmit({
+                          ...bookSubmit,
+                          book_image: event.target.value,
+                        })
+                      }
                     />
                   </label>
                 </div>
@@ -43,6 +103,12 @@ const UploadBook: FC = () => {
                     placeholder="Insert title book"
                     id="title_book"
                     type="text"
+                    onChange={(event) =>
+                      setBookSubmit({
+                        ...bookSubmit,
+                        title: event.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="w-full py-3 ">
@@ -50,10 +116,21 @@ const UploadBook: FC = () => {
                   <TextArea
                     placeholder="Book's descriptions...."
                     id="desc_book"
+                    onChange={(event) =>
+                      setBookSubmit({
+                        ...bookSubmit,
+                        description: event.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="w-fit">
-                  <button className="py-1 px-2 m-1 justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-semibold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                  <button
+                    id="button-add-book"
+                    type="submit"
+                    className="py-1 px-2 m-1 justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-semibold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                    disabled={isDisabled}
+                  >
                     Submit
                   </button>
                 </div>
