@@ -13,11 +13,3 @@
 body {
   margin: 0;
 }
-
-* {
-  fill-rule: unset;
-}
-
-* [fill-rule] {
-  fillrule: unset !important;
-}

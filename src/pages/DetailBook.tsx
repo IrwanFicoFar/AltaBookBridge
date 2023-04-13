@@ -1,3 +1,4 @@
+
 import { FC, useEffect, useState, FormEvent } from "react";
 import { Layout } from "../components/Layout";
 import { useNavigate } from "react-router-dom";
@@ -6,13 +7,21 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BookType } from "../utils/user";
 import Swal from "sweetalert2";
+import { useCookies } from "react-cookie";
 
 const UploadBook: FC = () => {
+ const [cookie, , removeCookie] = useCookies(["token", "uname"]);
+  const [falseUsername, setFalseUsername] = useState<boolean>(false);
+  const getUname = cookie.uname;
   const [bookSubmit, setBookSubmit] = useState<Partial<BookType>>({});
   const [data, setData] = useState<Partial<BookType>>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const params = useParams();
   const navigate = useNavigate();
+  
+    useEffect(() => {
+    setFalseUsername(true);
+  }, []);
 
   useEffect(() => {
     fetchDetailBook();
@@ -111,7 +120,6 @@ const UploadBook: FC = () => {
                   className="w-64 h-80 rounded-[5%]"
                 />
               </div>
-
               <div className="flex flex-col">
                 <div className="w-full">
                   <label className="font-bold">Title</label>
@@ -122,20 +130,28 @@ const UploadBook: FC = () => {
                   <p className="text-sm leading-4">{data.description}</p>
                 </div>
                 <div className="flex w-full">
-                  <button
-                    type="button"
-                    className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
-                    data-hs-overlay="#hs-medium-modal"
-                  >
-                    Edit Book
-                  </button>
-                  <button
-                    type="button"
-                    className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
-                    onClick={() => handleDeleteBook()}
-                  >
-                    Delete
-                  </button>
+                  {falseUsername ? (
+                    <button
+                      type="button"
+                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                      data-hs-overlay="#hs-medium-modal"
+                    >
+                      Edit Book
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+                  {falseUsername ? (
+                    <button
+                      type="button"
+                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Delete
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+
                   <div
                     id="hs-medium-modal"
                     className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"

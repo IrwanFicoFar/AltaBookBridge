@@ -2,8 +2,11 @@ import { FC, useState, useEffect, FormEvent } from "react";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { handleAuth } from "../../utils/redux/reducers/reducers";
 
 interface ObjSubmitType {
   username: string;
@@ -16,7 +19,11 @@ const Login: FC = () => {
     username: "",
     password: "",
   });
+  const [, setCookie] = useCookies(["token", "uname"]);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   // const [, setCookie] = useCookies();
 
@@ -51,6 +58,9 @@ const Login: FC = () => {
           showCancelButton: false,
         }).then((result) => {
           if (result.isConfirmed) {
+            setCookie("token", data.token, { path: "/" });
+            setCookie("uname", data.username, { path: "/" });
+            dispatch(handleAuth(true));
             navigate("/");
           }
         });
