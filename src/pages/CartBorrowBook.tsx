@@ -4,22 +4,50 @@ import { CardCartBorrowBook } from "../components/Card";
 import { ButtonCart } from "../components/Button";
 import Swal from "sweetalert2";
 import axios from "axios";
+// import { Pagination } from "../components/Pagination";
 
 interface TypeData {
   key: string;
-  datas: [
-    {
-      title: string;
-      bookImage: string;
-      status: boolean;
-      username: string;
-    }
-  ];
+  title: string;
+  bookImage: string;
+  status: boolean;
+  username: string;
 }
 
 const CardBorrowBook: FC = () => {
   const [datas, setDatas] = useState<TypeData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [visibleItems, setVisibleItems] = useState<TypeData[]>([]);
+
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+
+  useEffect(() => {
+    // Calculate the total number of pages based on the number of items and items per page
+    setTotalPages(Math.ceil(datas.length / itemsPerPage));
+  }, [datas, itemsPerPage]);
+
+  useEffect(() => {
+    // Calculate the start and end indices of the items to be displayed on the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setVisibleItems(datas.slice(startIndex, endIndex));
+  }, [datas, itemsPerPage, currentPage]);
+
+  function handlePageChange(direction: "prev" | "next" | number) {
+    if (direction === "prev") {
+      // Move to the previous page
+      setCurrentPage(currentPage - 1);
+    } else if (direction === "next") {
+      // Move to the next page
+      setCurrentPage(currentPage + 1);
+    } else {
+      // Move to a specific page
+      setCurrentPage(direction);
+    }
+  }
 
   useEffect(() => {
     fetchFromLocal();
@@ -88,12 +116,12 @@ const CardBorrowBook: FC = () => {
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-1 md-to-lg:grid-cols-2  md:flex-row ">
           <div className="w-full">
-            {datas.map((data) => (
+            {visibleItems.map((data: TypeData) => (
               <CardCartBorrowBook
                 key={data.key}
-                BookImage={data.datas[0].bookImage}
-                Title={data.datas[0].title}
-                Owner={data.datas[0].username}
+                BookImage={data.bookImage}
+                Title={data.title}
+                Owner={data.username}
                 Time="7 Days"
                 onClick={() => handleDelete(data.key)}
               />
@@ -119,6 +147,68 @@ const CardBorrowBook: FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10">
+          {/* compnent pagination */}
+          <nav className="flex justify-center items-center space-x-2">
+            <button
+              className="text-gray-500 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md"
+              onClick={() => handlePageChange("prev")}
+              disabled={currentPage === 1}
+            >
+              <span aria-hidden="true">«</span>
+              <span>Previous</span>
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (page: number) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  disabled={currentPage === page}
+                  className={`w-10 h-10 p-4 inline-flex items-center text-sm font-medium rounded-full ${
+                    currentPage === page
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-300 text-gray-500"
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
+
+            <button
+              className="text-gray-500 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md"
+              onClick={() => handlePageChange("next")}
+              disabled={currentPage === totalPages}
+            >
+              <span>Next</span>
+              <span aria-hidden="true">»</span>
+            </button>
+          </nav>
+          {/* compnent pagination */}
+          {/* klik pagination */}
+          <div className="hidden md:block">
+            <div className="flex gap-2 items-center justify-end">
+              <label>Items per page:</label>
+              <select
+                value={itemsPerPage}
+                onChange={(event) =>
+                  setItemsPerPage(parseInt(event.target.value))
+                }
+                className="py-3 px-4 pr-9 block bg-teal-500 rounded-md text-sm text-white dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+              >
+                <option value={5} className="py-5">
+                  5
+                </option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+                <option value={20}>20</option>
+              </select>
+            </div>
+          </div>
+          {/* klik pagination */}
         </div>
       </div>
     </Layout>
