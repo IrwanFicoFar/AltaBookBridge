@@ -49,7 +49,7 @@ export const ButtonDelete: FC<Partial<Props>> = (props) => {
   const { onClick } = props;
   return (
     <button
-      className="w-40 py-4 inline-flex justify-center items-center rounded-yes text-md font-semibold bg-@E76F51 text-@EFF1F3 hover:bg-@2A9D8F focus:outline-none transition-all drop-shadow-lg hover:drop-shadow-xl dark:focus:ring-offset-gray-800"
+      className="w-32 py-2 mt-2 inline-flex justify-center rounded-yes text-md font-semibold bg-@E76F51 text-@EFF1F3 hover:bg-@2A9D8F focus:outline-none transition-all drop-shadow-lg hover:drop-shadow-xl dark:focus:ring-offset-gray-800"
       onClick={onClick}
     >
       Remove
