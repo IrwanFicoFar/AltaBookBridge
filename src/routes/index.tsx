@@ -1,7 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { FC } from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+import { FC, useState, useEffect, useMemo } from "react";
 import axios from "axios";
-
+import { ThemeContext } from "../utils/context";
+import { useCookies } from "react-cookie";
 import Home from "../pages";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
@@ -15,7 +20,12 @@ import ListMyBook from "../pages/ListMyBook";
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/MUJAHID170997/BookBridgeAPI/1.0.0";
 
-const Router: FC = () => {
+const Router = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const background = useMemo(() => ({ theme, setTheme }), [theme]);
+  const [cookie] = useCookies(["token", "uname"]);
+  const checkToken = cookie.token;
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -23,11 +33,11 @@ const Router: FC = () => {
     },
     {
       path: "/login",
-      element: <Login />,
+      element: checkToken ? <Navigate to="/" /> : <Login />,
     },
     {
       path: "/register",
-      element: <Register />,
+      element: checkToken ? <Navigate to="/login" /> : <Register />,
     },
     {
       path: "/users",
@@ -56,7 +66,19 @@ const Router: FC = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  return (
+    <ThemeContext.Provider value={background}>
+      <RouterProvider router={router} />
+    </ThemeContext.Provider>
+  );
 };
 
 export default Router;

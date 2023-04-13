@@ -1,9 +1,19 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
-import { Link } from "react-router-dom";
 import { Input, TextArea } from "../components/Input";
+import { useCookies } from "react-cookie";
 
 const UploadBook: FC = () => {
+  const [cookie, , removeCookie] = useCookies(["token", "uname"]);
+  const [falseUsername, setFalseUsername] = useState<boolean>(false);
+  const getUname = cookie.uname;
+
+  useEffect(() => {
+    setFalseUsername(true);
+  }, []);
+
+  console.log(getUname);
+
   return (
     <Layout>
       <div className="flex justify-center items-center bg-slate-100">
@@ -37,19 +47,27 @@ const UploadBook: FC = () => {
                   </p>
                 </div>
                 <div className="flex w-full">
-                  <button
-                    type="button"
-                    className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
-                    data-hs-overlay="#hs-medium-modal"
-                  >
-                    Edit Book
-                  </button>
-                  <button
-                    type="button"
-                    className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
-                  >
-                    Delete
-                  </button>
+                  {falseUsername ? (
+                    <button
+                      type="button"
+                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                      data-hs-overlay="#hs-medium-modal"
+                    >
+                      Edit Book
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+                  {falseUsername ? (
+                    <button
+                      type="button"
+                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Delete
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                   <div
                     id="hs-medium-modal"
                     className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
@@ -75,13 +93,7 @@ const UploadBook: FC = () => {
                                 </span>
                                 <input
                                   type="file"
-                                  className=" w-fit block text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-@2A9D8F file:text-white
-      hover:file:bg-@1F7168
-    "
+                                  className=" w-fit block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semiboldfile:bg-@2A9D8F file:text-white hover:file:bg-@1F7168"
                                 />
                               </label>
                             </div>
