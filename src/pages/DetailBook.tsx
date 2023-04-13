@@ -111,7 +111,6 @@ const UploadBook: FC = () => {
                   className="w-auto h-80 rounded-[5%]"
                 />
               </div>
-
               <div className="flex flex-col">
                 <div className="w-full">
                   <label className="font-bold">Title</label>
