@@ -66,6 +66,35 @@ const CardBorrowBook: FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+
+    // Show first few pages
+    for (let i = 1; i <= 2; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          disabled={currentPage === i}
+          className={`w-10 h-10 p-4 inline-flex items-center text-sm font-medium rounded-full ${
+            currentPage === i
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300 text-gray-500"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Show ellipsis if there are more than 5 pages
+    if (totalPages > 5) {
+      pageNumbers.push(<span key="ellipsis">...</span>);
+    }
+
+    return pageNumbers;
+  };
+
   useEffect(() => {
     // Calculate the total number of pages based on the number of items and items per page
     setTotalPages(Math.ceil(datas.length / itemsPerPage));
@@ -191,7 +220,7 @@ const CardBorrowBook: FC = () => {
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-1 md-to-lg:grid-cols-2  md:flex-row ">
             <div className="w-full">
-              {visibleItems.map((data: TypeData) => (
+              {visibleItems.map((data) => (
                 <CardCartBorrowBook
                   key={data.key}
                   BookImage={data.datas[0].book_image}
@@ -223,7 +252,7 @@ const CardBorrowBook: FC = () => {
               </div>
             </div>
           </div>
-          <div className="mt-">
+          <div className="mt-10">
             {/* compnent pagination */}
             <nav className="flex justify-center items-center space-x-2">
               <button
