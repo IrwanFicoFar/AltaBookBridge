@@ -3,7 +3,7 @@ import { FC } from "react";
 export const Footer: FC = () => {
   return (
     <div>
-      <footer className="bg-@2A9D8F">
+      <footer className="bg-@2A9D8F dark:bg-@264653">
         <div className="max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
           {/* <!-- Grid --> */}
           <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ">
@@ -92,7 +92,7 @@ export const Footer: FC = () => {
           {/* <!-- End Grid --> */}
         </div>
       </footer>
-      <footer className="bg-@264653">
+      <footer className="bg-@264653 dark:bg-slate-900">
         <div className="max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-0.5 mx-auto">
           <div className="sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
             <div className="flex justify-between items-center">

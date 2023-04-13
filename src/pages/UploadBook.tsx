@@ -56,16 +56,16 @@ const UploadBook: FC = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center bg-slate-100">
+      <div className="flex justify-center items-center bg-slate-100 dark:bg-slate-900">
         <div className="grid col-span-2 m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
           <form
-            className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large"
+            className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large dark:bg-@264653"
             onSubmit={(event) => handleSubmit(event)}
           >
-            <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
+            <h1 className="uppercase font-bold text-3xl text-back dark:text-white ">
               Upload Books
             </h1>
-            <div className="grid md:grid-cols-2 justify-center">
+            <div className="grid md:grid-cols-2 justify-center ">
               <div className="">
                 <div className="p-2">
                   <img
@@ -96,7 +96,7 @@ const UploadBook: FC = () => {
                   </label>
                 </div>
               </div>
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex flex-col justify-center items-center ">
                 <div className="w-full">
                   <label className="font-bold">Title</label>
                   <Input
