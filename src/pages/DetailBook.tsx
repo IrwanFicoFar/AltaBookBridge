@@ -10,7 +10,7 @@ const UploadBook: FC = () => {
         <div className="grid  md:max-w-60 lg:max-w-[50%] col-span-2 m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
           <form className="flex flex-col p-5 justify-center items-center shadow-lg bg-white gap-3 rounded-large">
             <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
-              Upload Books
+              Detail Book
             </h1>
             <div className="grid md:grid-cols-2">
               <div className="flex p-2 justify-center items-center">
@@ -20,7 +20,6 @@ const UploadBook: FC = () => {
                   className="w-auto h-80 rounded-[5%]"
                 />
               </div>
-
               <div className="flex flex-col">
                 <div className="w-full">
                   <label className="font-bold">Title</label>

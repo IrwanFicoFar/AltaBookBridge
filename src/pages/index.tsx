@@ -9,7 +9,7 @@ import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
 
 interface DataType {
   title: string;
-  bookImage: string;
+  book_image: string;
   status: boolean;
   username: string;
 }
@@ -65,6 +65,7 @@ const Home: FC = () => {
 
   return (
     <Layout>
+      <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10"></div>
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -72,7 +73,7 @@ const Home: FC = () => {
           {datas.map((data) => (
             <CardLanding
               key={data.username}
-              BookImage={data.bookImage}
+              BookImage={data.book_image}
               MyLink={`/detail-book/${data.username}`}
               Title={data.title}
               Owner={data.username}
