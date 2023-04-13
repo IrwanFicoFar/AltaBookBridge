@@ -191,7 +191,7 @@ const CardBorrowBook: FC = () => {
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-1 md-to-lg:grid-cols-2  md:flex-row ">
             <div className="w-full">
-              {visibleItems.map((data: TypeData) => (
+              {datas.map((data) => (
                 <CardCartBorrowBook
                   key={data.key}
                   BookImage={data.datas[0].book_image}
