@@ -1,11 +1,11 @@
-import { FC, useEffect, useState, FormEvent } from "react";
+import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import { Layout } from "../components/Layout";
 import { CardLanding } from "../components/Card";
 import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
+import { Loading } from "../components/Loading";
 
 interface DataType {
   title: string;
@@ -65,9 +65,8 @@ const Home: FC = () => {
 
   return (
     <Layout>
-      <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10"></div>
       {loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10">
           {datas.map((data) => (
