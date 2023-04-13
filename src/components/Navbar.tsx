@@ -59,7 +59,7 @@ export const Navbar: FC = () => {
             Cart
           </h3>
         </Link>
-        <div className="hs-dropdown relative inline-flex">
+        <div className="hs-dropdown relative inline-flex font-semibold">
           <button
             id="hs-dropdown"
             type="button"
