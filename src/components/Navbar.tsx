@@ -1,18 +1,25 @@
-import { FC, useEffect, useState, MouseEventHandler } from "react";
+import { FC, useEffect, useState, MouseEventHandler, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { MdShoppingCart, MdLogout, MdLogin } from "react-icons/md";
+import { MdShoppingCart, MdLogout, MdModeNight, MdSunny } from "react-icons/md";
 import { GiBookmark } from "react-icons/gi";
 import { FaUserTie, FaUpload, FaChevronLeft, FaBook } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { handleAuth } from "../utils/redux/reducers/reducers";
+import { ThemeContext } from "../utils/context";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 export const Navbar: FC = () => {
-  const [login, setLogin] = useState<boolean>(false);
-
+  const { theme, setTheme } = useContext(ThemeContext);
+  const [cookie, , removeCookie] = useCookies(["token", "uname"]);
+  const dispatch = useDispatch();
+  const checkToken = cookie.token;
+  const getUname = cookie.uname;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLogin(true);
-  }, []);
+  const handleTheme = (mode: string) => {
+    setTheme(mode);
+  };
 
   const handleLogout = () => {
     Swal.fire({
@@ -25,8 +32,10 @@ export const Navbar: FC = () => {
       confirmButtonText: "Yes, Log Out!",
     }).then((result) => {
       if (result.isConfirmed) {
+        removeCookie("token");
+        removeCookie("uname");
         localStorage.clear();
-        setLogin(false);
+        dispatch(handleAuth(false));
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -116,6 +125,16 @@ export const Navbar: FC = () => {
             </div>
 
             <button
+              onClick={() => {
+                handleTheme(theme === "light" ? "dark" : "light");
+              }}
+              id="btn-dark"
+              className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+            >
+              {theme === "dark" ? <MdModeNight /> : <MdSunny />}
+              {theme} Mode
+            </button>
+            <button
               className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
               onClick={() => handleLogout()}
             >
@@ -178,7 +197,7 @@ export const Navbar: FC = () => {
           className="hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
         >
           <div className="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 xl:gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
-            {login ? (
+            {checkToken ? (
               navAfterLogin()
             ) : (
               <Link to="/login">
