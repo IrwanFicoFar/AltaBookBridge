@@ -1,11 +1,11 @@
 import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import PropagateLoader from "react-spinners/PropagateLoader";
 
 import { Layout } from "../components/Layout";
 import { CardLanding } from "../components/Card";
 import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
+import { Loading } from "../components/Loading";
 
 interface DataType {
   title: string;
@@ -14,20 +14,11 @@ interface DataType {
   username: string;
 }
 
-const override: CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "middle",
-  margin: "0 auto",
-  backgroundColor: "",
-};
-
 const Home: FC = () => {
   const [datas, setDatas] = useState<DataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [status, setStatus] = useState<boolean>();
-  let [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     fetchAllBook();
@@ -48,7 +39,7 @@ const Home: FC = () => {
         alert(message);
       })
       .finally(() => {
-        setLoading(true);
+        setLoading(false);
       });
   };
 
@@ -74,20 +65,10 @@ const Home: FC = () => {
 
   return (
     <Layout>
-      <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10"></div>
       {loading ? (
-        <div>
-          <PropagateLoader
-            color={color}
-            loading={loading}
-            cssOverride={override}
-            size={20}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
+        <Loading />
       ) : (
-        <div>
+        <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10">
           {datas.map((data) => (
             <CardLanding
               key={data.username}
