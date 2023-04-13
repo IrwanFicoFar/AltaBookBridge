@@ -45,7 +45,7 @@ const ListMyBook: FC = () => {
       ) : (
         <div>
           <div className="flex flex-col justify-center items-center pt-4 sm:pt-6 md:pt-8 xl:mt-10 ">
-            <h1 className="font-bold text-md md:texl-lg xl:text-xl  uppercase flex flex-col justify-center items-center">
+            <h1 className="font-bold text-md md:texl-lg xl:text-xl  uppercase flex flex-col justify-center items-center dark:text-slate-100">
               my list book
               <span className="border-b-4 w-[70%] "></span>
             </h1>

@@ -32,8 +32,10 @@ export const Navbar: FC = () => {
       confirmButtonText: "Yes, Log Out!",
     }).then((result) => {
       if (result.isConfirmed) {
-        removeCookie("token");
-        removeCookie("uname");
+        setTimeout(() => {
+          removeCookie("token");
+          removeCookie("uname");
+        }, 100);
         localStorage.clear();
         dispatch(handleAuth(false));
         Swal.fire({
@@ -50,7 +52,7 @@ export const Navbar: FC = () => {
 
   const navAfterLogin = () => {
     return (
-      <div className="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 xl:gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
+      <div className="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 xl:gap-16 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5 ">
         <Link to="/cart/:username">
           <h3 className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
             <MdShoppingCart className="text-2xl " />
@@ -148,7 +150,7 @@ export const Navbar: FC = () => {
   };
 
   return (
-    <header className="relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-@2A9D8F text-xl py-5 ">
+    <header className="relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-@2A9D8F text-xl py-5 dark:bg-@264653">
       <nav
         className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
         aria-label="Global"
@@ -200,11 +202,24 @@ export const Navbar: FC = () => {
             {checkToken ? (
               navAfterLogin()
             ) : (
-              <Link to="/login">
-                <h3 className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
-                  Login / Register
-                </h3>
-              </Link>
+              <div className="flex gap-5">
+                <Link to="/login">
+                  <h3 className=" text-@EFF1F3 hover:text-2xl flex gap-1 items-center duration-200">
+                    Login / Register
+                  </h3>
+                </Link>
+                <div>
+                  <button
+                    onClick={() => {
+                      handleTheme(theme === "light" ? "dark" : "light");
+                    }}
+                    id="btn-dark"
+                    className=" p-2 rounded-full text-sm text-gray-800 hover:bg-slate-50 dark:text-gray-400  dark:hover:bg-slate-50"
+                  >
+                    {theme === "dark" ? <MdModeNight /> : <MdSunny />}
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>

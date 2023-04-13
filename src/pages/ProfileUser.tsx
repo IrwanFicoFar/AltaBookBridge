@@ -101,10 +101,10 @@ const ProfileUser: FC = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center bg-slate-100">
+      <div className="flex justify-center items-center bg-slate-100 dark:bg-slate-900">
         <div className="grid  md:max-w-60 lg:max-w-[100%] m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
-          <form className="flex flex-col md:w-96 p-5 justify-center items-center shadow-lg bg-white gap-3 rounded-large">
-            <div className="card w-48 h-48 bg-slate-300 rounded-full">
+          <form className="flex flex-col md:w-96 p-5 justify-center items-center shadow-lg bg-white gap-3 rounded-large dark:bg-@264653">
+            <div className="card w-48 h-48 bg-slate-300  rounded-full">
               <div className="p-6">
                 <img
                   src="./user_icon.png"
