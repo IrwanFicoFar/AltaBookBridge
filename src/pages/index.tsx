@@ -22,7 +22,7 @@ const Home: FC = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [visibleItems, setVisibleItems] = useState<TypeData[]>([]);
+  const [visibleItems, setVisibleItems] = useState<DataType[]>([]);
 
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
 
@@ -55,6 +55,35 @@ const Home: FC = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+
+    // Show first few pages
+    for (let i = 1; i <= 2; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          disabled={currentPage === i}
+          className={`w-10 h-10 p-4 inline-flex items-center text-sm font-medium rounded-full ${
+            currentPage === i
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300 text-gray-500"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Show ellipsis if there are more than 5 pages
+    if (totalPages > 5) {
+      pageNumbers.push(<span key="ellipsis">...</span>);
+    }
+
+    return pageNumbers;
+  };
 
   useEffect(() => {
     // Calculate the total number of pages based on the number of items and items per page
@@ -130,7 +159,7 @@ const Home: FC = () => {
         <Loading />
       ) : (
         <div className="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 xl:gap-10 p-4 sm:p-6 md:-8 xl:p-10">
-          {datas.map((data) => (
+          {visibleItems.map((data) => (
             <CardLanding
               key={data.username}
               BookImage={data.book_image}
@@ -148,7 +177,7 @@ const Home: FC = () => {
           ))}
         </div>
       )}
-      <div className="mt-">
+      <div className="my-10 md:mx-5">
         {/* compnent pagination */}
         <nav className="flex justify-center items-center space-x-2">
           <button
