@@ -139,7 +139,7 @@ export const CardCartBorrowBook: FC<Partial<CardCartBorrowBook>> = (props) => {
         <div className="h-full ml-2 sm:ml-5 md:ml-7 flex flex-col items-end">
           <table className="">
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr>
+              <tr className="border-b-4">
                 <td className="px-2 whitespace-nowrap text-md md:text-lg font-semibold text-@264653 dark:text-gray-200">
                   Title
                 </td>
@@ -147,7 +147,7 @@ export const CardCartBorrowBook: FC<Partial<CardCartBorrowBook>> = (props) => {
                   {Title}
                 </td>
               </tr>
-              <tr>
+              <tr className="border-b-4">
                 <td className=" px-2 whitespace-nowrap text-md md:text-lg font-semibold text-gray-800 dark:text-gray-200">
                   Owner
                 </td>
@@ -155,7 +155,7 @@ export const CardCartBorrowBook: FC<Partial<CardCartBorrowBook>> = (props) => {
                   {Owner}
                 </td>
               </tr>
-              <tr>
+              <tr className="border-b-4">
                 <td className=" px-2 whitespace-nowrap text-md md:text-lg font-semibold text-@264653 dark:text-gray-200">
                   Durations
                 </td>
@@ -165,7 +165,7 @@ export const CardCartBorrowBook: FC<Partial<CardCartBorrowBook>> = (props) => {
               </tr>
             </tbody>
           </table>
-          <div className="my-4 flex justify-end">
+          <div className="my-4 flex justify-end hover:scale-105 duration-300">
             <ButtonDelete onClick={onClick} />
           </div>
         </div>

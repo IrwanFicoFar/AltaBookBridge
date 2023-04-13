@@ -5,14 +5,20 @@ import { ButtonCart } from "../components/Button";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Loading } from "../components/Loading";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 // import { Pagination } from "../components/Pagination";
 
 interface TypeData {
   key: string;
-  title: string;
-  bookImage: string;
-  status: boolean;
-  username: string;
+  datas: [
+    {
+      title: string;
+      book_image: string;
+      status: boolean;
+      username: string;
+    }
+  ];
 }
 
 const CardBorrowBook: FC = () => {
@@ -24,6 +30,11 @@ const CardBorrowBook: FC = () => {
   const [visibleItems, setVisibleItems] = useState<TypeData[]>([]);
 
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+
+  const [cookie] = useCookies(["token"]);
+  const getToken = cookie.token;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,35 +65,6 @@ const CardBorrowBook: FC = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-
-    // Show first few pages
-    for (let i = 1; i <= 2; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          onClick={() => handlePageChange(i)}
-          disabled={currentPage === i}
-          className={`w-10 h-10 p-4 inline-flex items-center text-sm font-medium rounded-full ${
-            currentPage === i
-              ? "bg-blue-500 text-white"
-              : "bg-gray-300 text-gray-500"
-          }`}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    // Show ellipsis if there are more than 5 pages
-    if (totalPages > 5) {
-      pageNumbers.push(<span key="ellipsis">...</span>);
-    }
-
-    return pageNumbers;
-  };
 
   useEffect(() => {
     // Calculate the total number of pages based on the number of items and items per page
@@ -120,7 +102,7 @@ const CardBorrowBook: FC = () => {
     const keys = Object.keys(localStorage);
     const values = keys.map((key) => {
       const data = localStorage.getItem(key);
-      console.log(data);
+
       if (data) {
         const parsedData = JSON.parse(data);
         if (parsedData) {
@@ -142,11 +124,41 @@ const CardBorrowBook: FC = () => {
     }
   };
 
-  console.log(datas);
+  const username = "kristain09";
+
+  const Headers = {
+    headers: {
+      Authorization: `Bearer ${getToken}`,
+      "Content-Type": "application/json",
+    },
+  };
 
   const handleBorrow = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // axios.post();
+    axios.post(`users/checkout`, datas, Headers).then((response) => {
+      Swal.fire({
+        icon: "success",
+        title: "Successfully",
+        showCancelButton: false,
+        showConfirmButton: true,
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            localStorage.clear();
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          const { message } = error.message;
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+    });
   };
 
   const handleDelete = (key: string) => {
@@ -182,9 +194,9 @@ const CardBorrowBook: FC = () => {
               {visibleItems.map((data: TypeData) => (
                 <CardCartBorrowBook
                   key={data.key}
-                  BookImage={data.bookImage}
-                  Title={data.title}
-                  Owner={data.username}
+                  BookImage={data.datas[0].book_image}
+                  Title={data.datas[0].title}
+                  Owner={data.datas[0].username}
                   Time="7 Days"
                   onClick={() => handleDelete(data.key)}
                 />
@@ -192,7 +204,7 @@ const CardBorrowBook: FC = () => {
             </div>
             <div className=" grid grid-cols-1 justify-center">
               <div className="p-6 px-8 py-10 sm:py-14 md:py-18 sm:px-20 md:px-40 md-to-lg:px-14 lg:px-15 xl:px-5 2xl:px-20  flex flex-col">
-                <div className="bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md flex flex-col justify-between">
+                <div className=" bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md flex flex-col justify-between">
                   <h3 className="text-lg font-bold text-@264653 dark:text-white">
                     Final Proccess to Borrow
                   </h3>
@@ -200,7 +212,7 @@ const CardBorrowBook: FC = () => {
                     Check each items, to make sure all you borrow in bucket. if
                     you done, then click below to proccess
                   </p>
-                  <div className="mt-4 ">
+                  <div className="mt-4 hover:scale-105 duration-300">
                     <ButtonCart
                       onClick={(event) => {
                         handleBorrow(event);
