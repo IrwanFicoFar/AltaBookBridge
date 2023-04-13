@@ -106,9 +106,9 @@ const UploadBook: FC = () => {
             <div className="grid md:grid-cols-2">
               <div className="flex p-2 justify-center items-center">
                 <img
-                  src={data.book_image}
+                  src="./download.jpeg"
                   alt=""
-                  className="w-auto h-80 rounded-[5%]"
+                  className="w-64 h-80 rounded-[5%]"
                 />
               </div>
 
@@ -117,9 +117,9 @@ const UploadBook: FC = () => {
                   <label className="font-bold">Title</label>
                   <p className="uppercase font-bold text-xl">{data.title}</p>
                 </div>
-                <div className="w-full">
+                <div className="w-full h-60">
                   <label className="font-bold">Description</label>
-                  <p className="w-full h-[10%]">{data.description}</p>
+                  <p className="text-sm leading-4">{data.description}</p>
                 </div>
                 <div className="flex w-full">
                   <button
