@@ -100,7 +100,7 @@ export const CardBorrowBook: FC<PropsBorrowBook> = (props) => {
   const { Title, Owner, Time, MyLink } = props;
   return (
     //   {/* card start*/}
-    <div className="drop-shadow-lg hover:drop-shadow-lg hover:scale-105 duration-300 flex flex-col rounded-yes bg-@2A9D8F rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+    <div className="drop-shadow-lg hover:drop-shadow-lg hover:scale-105 duration-300 flex flex-col rounded-yes bg-@2A9D8F rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] ">
       <Link to={MyLink}>
         <img
           className="w-full h-auto rounded-yes hover:scale-105 duration-300"
@@ -129,7 +129,7 @@ export const CardBorrowBook: FC<PropsBorrowBook> = (props) => {
 export const CardCartBorrowBook: FC<Partial<CardCartBorrowBook>> = (props) => {
   const { Title, Owner, Time, onClick, BookImage } = props;
   return (
-    <div className="border-b-4 bg-@EFF1F3 rounded-yes p-3 my-5">
+    <div className="dark:bg-slate-700 border-b-4 bg-@EFF1F3 rounded-yes p-3 my-5">
       <div className="flex px-2 py-5 md:pt-5 items-center ">
         <img
           className="w-auto h-40 md:h-44 rounded-lg"
