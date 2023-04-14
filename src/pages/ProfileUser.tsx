@@ -179,8 +179,7 @@ const ProfileUser: FC = () => {
                 className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
               >
                 <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all md:max-w-2xl md:w-full m-3 md:mx-auto">
-                  <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
-
+                  <form className="flex flex-col p-5 items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-large">
                     <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
                       Update Profile
                     </h1>
