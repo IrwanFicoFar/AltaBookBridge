@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 interface bookSubmitType {
   title: string;
   description: string;
-  book_image: string;
+  book_image: any;
 }
 
 const UploadBook: FC = () => {
@@ -16,6 +16,7 @@ const UploadBook: FC = () => {
     description: "",
     book_image: "",
   });
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const UploadBook: FC = () => {
           showCancelButton: false,
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate("/upload-book");
+            navigate("/books");
           }
         });
       })
@@ -68,11 +69,21 @@ const UploadBook: FC = () => {
             <div className="grid md:grid-cols-2 justify-center ">
               <div className="">
                 <div className="p-2">
-                  <img
-                    src="./download.jpeg"
-                    alt=""
-                    className="w-auto h-80 rounded-[5%]"
-                  />
+                  {bookSubmit.book_image ? (
+                    <img
+                      src={URL.createObjectURL(
+                        new Blob([bookSubmit.book_image])
+                      )}
+                      alt=""
+                      className="w-60 h-80 rounded-[5%]"
+                    />
+                  ) : (
+                    <img
+                      src="./download.jpeg"
+                      alt=""
+                      className="w-60 h-80 rounded-[5%]"
+                    />
+                  )}
                 </div>
                 <div className="p-2 w-40">
                   <label className="block">
@@ -80,16 +91,18 @@ const UploadBook: FC = () => {
                     <Input
                       type="file"
                       className=" w-fit block text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-@2A9D8F file:text-white
-      hover:file:bg-@1F7168
-    "
+    file:mr-4 file:py-2 file:px-4
+    file:rounded-md file:border-0
+    file:text-sm file:font-semibold
+    file:bg-@2A9D8F file:text-white
+    hover:file:bg-@1F7168
+  "
                       onChange={(event) =>
                         setBookSubmit({
                           ...bookSubmit,
-                          book_image: event.target.value,
+                          book_image: event.target.files
+                            ? event.target.files[0]
+                            : "",
                         })
                       }
                     />
@@ -98,7 +111,7 @@ const UploadBook: FC = () => {
               </div>
               <div className="flex flex-col justify-center items-center ">
                 <div className="w-full">
-                  <label className="font-bold">Title</label>
+                  <label className="font-bold dark:text-white">Title</label>
                   <Input
                     placeholder="Insert title book"
                     id="title_book"
@@ -112,7 +125,9 @@ const UploadBook: FC = () => {
                   />
                 </div>
                 <div className="w-full py-3 ">
-                  <label className="font-bold">Description</label>
+                  <label className="font-bold dark:text-white">
+                    Description
+                  </label>
                   <TextArea
                     placeholder="Book's descriptions...."
                     id="desc_book"

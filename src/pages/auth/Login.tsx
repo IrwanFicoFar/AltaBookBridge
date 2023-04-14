@@ -78,22 +78,22 @@ const Login: FC = () => {
 
   return (
     <Layout>
-      <div className="grid md:grid-cols-2 lg:grid-cols-2 bg-slate-100">
+      <div className="grid md:grid-cols-2 lg:grid-cols-2 bg-slate-100  dark:bg-slate-800">
         {!isMobile && (
           <div className="">
-            <img src="./bg.jpg" alt="" className="w-full h-full" />
+            <img src="./bg.jpg" alt="" className="w-full h-full " />
           </div>
         )}
         <div className="flex  m-10 lg:m-10 justify-center items-center  dark:bg-slate-800  rounded-2xl">
           <form
-            className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-[5%]"
+            className="flex flex-col p-5 items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-[5%]"
             onSubmit={(event) => handleSubmit(event)}
           >
             <h1 className="font-bold text-3xl text-back dark:text-white">
               LOGIN
             </h1>
             <div>
-              <label className="font-bold">Username</label>
+              <label className="font-bold  dark:text-white">Username</label>
               <Input
                 placeholder="Insert your username"
                 id="input-uname"
@@ -104,7 +104,7 @@ const Login: FC = () => {
               />
             </div>
             <div>
-              <label className="font-bold">Password</label>
+              <label className="font-bold  dark:text-white">Password</label>
               <Input
                 placeholder="Insert your password"
                 id="input-password"
@@ -126,7 +126,7 @@ const Login: FC = () => {
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="font-bold text-blue-700"
+                className="font-bold text-blue-700 dark:text-@2A9D8F"
                 id="nav-register "
               >
                 {" "}

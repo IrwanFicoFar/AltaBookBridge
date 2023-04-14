@@ -13,7 +13,7 @@ export interface BookType {
   id: number;
   title: string;
   description: string;
-  book_image: string;
+  book_image: any;
   data: {
     username: "username123";
     title: "Learn Golang v1";

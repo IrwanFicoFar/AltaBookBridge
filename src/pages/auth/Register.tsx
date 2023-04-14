@@ -68,7 +68,7 @@ const Register: FC = () => {
   }
   return (
     <Layout>
-      <div className="grid md:grid-cols-2 bg-slate-100">
+      <div className="grid md:grid-cols-2 bg-slate-100  dark:bg-slate-800">
         {!isMobile && (
           <div className="">
             <img src="./bg.jpg" alt="" className="w-full h-full" />
@@ -76,14 +76,14 @@ const Register: FC = () => {
         )}
         <div className="flex  m-10 lg:m-10 justify-center items-center  dark:bg-slate-800  rounded-2xl">
           <form
-            className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-[5%]"
+            className="flex flex-col p-5 items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-[5%]"
             onSubmit={(event) => handleSubmit(event)}
           >
             <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
               Register
             </h1>
             <div className="w-full">
-              <label className="font-bold">Name</label>
+              <label className="font-bold dark:text-white">Name</label>
               <Input
                 placeholder="Insert your full name"
                 id="input-name"
@@ -94,7 +94,7 @@ const Register: FC = () => {
               />
             </div>
             <div className="w-full">
-              <label className="font-bold">Username</label>
+              <label className="font-bold dark:text-white">Username</label>
               <Input
                 placeholder="Insert your username"
                 id="input-uname"
@@ -105,7 +105,7 @@ const Register: FC = () => {
               />
             </div>
             <div className="w-full">
-              <label className="font-bold">Password</label>
+              <label className="font-bold dark:text-white">Password</label>
               <Input
                 placeholder="Insert your password"
                 id="input-password"
@@ -127,7 +127,7 @@ const Register: FC = () => {
               Have an account?{" "}
               <Link
                 to="/login"
-                className="font-bold text-blue-700"
+                className="font-bold text-blue-700 dark:text-@2A9D8F"
                 id="nav-register "
               >
                 {" "}
