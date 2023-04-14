@@ -4,21 +4,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { FC, useState, useEffect, useMemo } from "react";
-import axios from "axios";
-import { ThemeContext } from "../utils/context";
 import { useCookies } from "react-cookie";
-import Home from "../pages";
-import Login from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
-import DetailBook from "../pages/DetailBook";
-import ProfileUser from "../pages/ProfileUser";
+import axios from "axios";
+
 import ListBorrowBook from "../pages/ListBorrowBook";
 import CartBorrowBook from "../pages/CartBorrowBook";
+import { ThemeContext } from "../utils/context";
+import ProfileUser from "../pages/ProfileUser";
+import Register from "../pages/auth/Register";
+import DetailBook from "../pages/DetailBook";
 import UploadBook from "../pages/UploadBook";
 import ListMyBook from "../pages/ListMyBook";
-
-axios.defaults.baseURL =
-  "https://virtserver.swaggerhub.com/MUJAHID170997/BookBridgeAPI/1.0.0";
+import Login from "../pages/auth/Login";
+import Home from "../pages";
 
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/MUJAHID170997/BookBridgeAPI/1.0.0";

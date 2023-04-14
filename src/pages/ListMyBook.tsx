@@ -1,25 +1,22 @@
 import { FC, useState, useEffect } from "react";
-import { Layout } from "../components/Layout";
-import { CardMyListBook } from "../components/Card";
 import axios from "axios";
+
+import { CardMyListBook } from "../components/Card";
+import { ListMyBookDataType } from "../utils/user";
+import { Layout } from "../components/Layout";
 import { Loading } from "../components/Loading";
 
-interface DataType {
-  title: string;
-  book_image: string;
-  rent_username: string;
-}
-const username = "users";
-
 const ListMyBook: FC = () => {
-  const [datas, setDatas] = useState<DataType[]>([]);
+  const [datas, setDatas] = useState<ListMyBookDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const username = "users";
 
+  const [visibleItems, setVisibleItems] = useState<ListMyBookDataType[]>([]);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [visibleItems, setVisibleItems] = useState<DataType[]>([]);
 
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  document.title = `List My Book | Book Management`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,8 +50,6 @@ const ListMyBook: FC = () => {
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-
-    // Show first few pages
     for (let i = 1; i <= 2; i++) {
       pageNumbers.push(
         <button
@@ -71,12 +66,6 @@ const ListMyBook: FC = () => {
         </button>
       );
     }
-
-    // Show ellipsis if there are more than 5 pages
-    if (totalPages > 5) {
-      pageNumbers.push(<span key="ellipsis">...</span>);
-    }
-
     return pageNumbers;
   };
 
@@ -114,19 +103,15 @@ const ListMyBook: FC = () => {
       .get(`${username}/books`)
       .then((response) => {
         const { data } = response.data;
-        // console.log(data);
         setDatas(data);
       })
       .catch((error) => {
         const { message } = error.message;
-        console.log(error);
       })
       .finally(() => {
         setLoading(false);
       });
   };
-
-  console.log(datas[0]);
 
   return (
     <Layout>

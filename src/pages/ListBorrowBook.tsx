@@ -1,26 +1,24 @@
 import { FC, useState, useEffect } from "react";
-import { Layout } from "../components/Layout";
-import { CardBorrowBook } from "../components/Card";
+import Swal from "sweetalert2";
 import axios from "axios";
+
+import { CardBorrowBook } from "../components/Card";
 import { Loading } from "../components/Loading";
+import { Layout } from "../components/Layout";
+import { ListBorrowDataType } from "../utils/user";
 
 const username = "users";
 
-interface DataType {
-  title: string;
-  book_image: string;
-  owner_username: string;
-}
-
 const ListBorrowBook: FC = () => {
-  const [datas, setDatas] = useState<DataType[]>([]);
+  const [datas, setDatas] = useState<ListBorrowDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [visibleItems, setVisibleItems] = useState<ListBorrowDataType[]>([]);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [visibleItems, setVisibleItems] = useState<DataType[]>([]);
 
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  document.title = `List Borrow Book | Book Management`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,8 +52,6 @@ const ListBorrowBook: FC = () => {
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-
-    // Show first few pages
     for (let i = 1; i <= 2; i++) {
       pageNumbers.push(
         <button
@@ -71,11 +67,6 @@ const ListBorrowBook: FC = () => {
           {i}
         </button>
       );
-    }
-
-    // Show ellipsis if there are more than 5 pages
-    if (totalPages > 5) {
-      pageNumbers.push(<span key="ellipsis">...</span>);
     }
 
     return pageNumbers;
@@ -115,12 +106,14 @@ const ListBorrowBook: FC = () => {
       .get(`${username}/rent`)
       .then((response) => {
         const { data } = response.data;
-        console.log(data);
         setDatas(data);
       })
       .catch((error) => {
         const { message } = error.message;
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: message,
+        });
       })
       .finally(() => {
         setLoading(false);

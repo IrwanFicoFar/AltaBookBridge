@@ -1,17 +1,14 @@
 import { FC, useState, useEffect, FormEvent } from "react";
-import { Layout } from "../components/Layout";
-import { Input, TextArea } from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
-interface bookSubmitType {
-  title: string;
-  description: string;
-  book_image: any;
-}
+import axios from "axios";
+
+import { Input, TextArea } from "../components/Input";
+import { useNavigate } from "react-router-dom";
+import { Layout } from "../components/Layout";
+import { uploadBookType } from "../utils/user";
 
 const UploadBook: FC = () => {
-  const [bookSubmit, setBookSubmit] = useState<bookSubmitType>({
+  const [bookSubmit, setBookSubmit] = useState<uploadBookType>({
     title: "",
     description: "",
     book_image: "",
@@ -19,6 +16,8 @@ const UploadBook: FC = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
+
+  document.title = `Upload Book | Book Management`;
 
   useEffect(() => {
     const isEmpty = Object.values(bookSubmit).every((val) => {
@@ -90,13 +89,7 @@ const UploadBook: FC = () => {
                     <span className="sr-only">Choose profile photo</span>
                     <Input
                       type="file"
-                      className=" w-fit block text-sm text-gray-500
-    file:mr-4 file:py-2 file:px-4
-    file:rounded-md file:border-0
-    file:text-sm file:font-semibold
-    file:bg-@2A9D8F file:text-white
-    hover:file:bg-@1F7168
-  "
+                      className=" w-fit block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-@2A9D8F file:text-white hover:file:bg-@1F7168"
                       onChange={(event) =>
                         setBookSubmit({
                           ...bookSubmit,

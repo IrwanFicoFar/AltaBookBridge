@@ -4,21 +4,17 @@ import { Input } from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-
-interface ObjSubmitType {
-  name: string;
-  username: string;
-  password: string;
-}
+import { ObjSubmitTypeRegister } from "../../utils/user";
 
 const Register: FC = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [objSubmit, setObjSubmit] = useState<ObjSubmitType>({
+  const [objSubmit, setObjSubmit] = useState<ObjSubmitTypeRegister>({
     name: "",
     username: "",
     password: "",
   });
   const [isDisabled, setIsDisabled] = useState(true);
+  document.title = `Register | User Management`;
   const navigate = useNavigate();
 
   useEffect(() => {

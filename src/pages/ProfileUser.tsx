@@ -1,23 +1,17 @@
-import { FC, FormEvent, useEffect, useState } from "react";
-import { Layout } from "../components/Layout";
-import { Link, useNavigate } from "react-router-dom";
-import { Input } from "../components/Input";
-import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { UserEdit } from "../utils/user";
-import axios from "axios";
+import { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import axios from "axios";
+
+import { Layout } from "../components/Layout";
+import { Input } from "../components/Input";
+import { UserEdit } from "../utils/user";
 
 const ProfileUser: FC = () => {
   const [objSubmit, setObjSubmit] = useState<Partial<UserEdit>>({});
   const [data, setData] = useState<Partial<UserEdit>>({});
-  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [cookie] = useCookies(["token", "uname"]);
-  const params = useParams();
-  const navigate = useNavigate();
-
   let token = cookie.token;
-  console.log(token);
 
   useEffect(() => {
     fetchData();
@@ -28,7 +22,7 @@ const ProfileUser: FC = () => {
       .get(`users`)
       .then((response) => {
         const { data } = response.data;
-        document.title = `${data.username} | Profile`;
+        document.title = `${data.username} | User Management`;
         setData(data);
       })
       .catch((error) => {
@@ -65,7 +59,6 @@ const ProfileUser: FC = () => {
           showCancelButton: false,
         }).then((result) => {
           if (result.isConfirmed) {
-            setIsEdit(false);
             setObjSubmit({});
             window.location.reload();
           }
@@ -202,13 +195,7 @@ const ProfileUser: FC = () => {
                           <span className="sr-only">Choose profile photo</span>
                           <Input
                             type="file"
-                            className="block text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-@2A9D8F file:text-white
-      hover:file:bg-@1F7168
-    "
+                            className="block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-@2A9D8F file:text-white hover:file:bg-@1F7168"
                             onChange={(event) => {
                               if (!event.currentTarget.files) {
                                 return;
@@ -288,67 +275,3 @@ const ProfileUser: FC = () => {
 };
 
 export default ProfileUser;
-{
-  /* <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-[5%]">
-            <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
-              Update Profile
-            </h1>
-            <div className="grid md:grid-cols-2 justify-center items-center">
-              <div className="card h-32 w-32 md:w-48 md:h-48 bg-slate-300 rounded-full">
-                <div className="p-6">
-                  <img
-                    src="./user_icon.png"
-                    alt=""
-                    className="w-20 h-20 md:h-36 md:w-36 border-spacing-5"
-                  />
-                </div>
-              </div>
-              <div className="">
-                <label className="block">
-                  <span className="sr-only">Choose profile photo</span>
-                  <input
-                    type="file"
-                    className="block text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-@2A9D8F file:text-white
-      hover:file:bg-@1F7168
-    "
-                  />
-                </label>
-              </div>
-            </div>
-            <div className="w-full">
-              <label className="font-bold ">Name</label>
-              <Input
-                placeholder="Insert your full name"
-                id="input-uname"
-                type="username"
-              />
-            </div>
-            <div className="w-full">
-              <label className="font-bold">Username</label>
-              <Input
-                placeholder="Insert your username"
-                id="input-uname"
-                type="username"
-                className="border rounded-lg bg-slate-200 border-slate-400 text-black p-2 focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900 w-full"
-                disabled
-              />
-            </div>
-            <div className="w-full">
-              <label className="font-bold">Password</label>
-              <Input
-                placeholder="Insert your password"
-                id="input-password"
-                type="password"
-              />
-            </div>
-            <div>
-              <button className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                Update
-              </button>
-            </div>
-          </form> */
-}

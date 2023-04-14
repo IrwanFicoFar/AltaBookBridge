@@ -1,43 +1,31 @@
 import { FC, FormEvent, useEffect, useState } from "react";
-import { Layout } from "../components/Layout";
-import { CardCartBorrowBook } from "../components/Card";
-import { ButtonCart } from "../components/Button";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { Loading } from "../components/Loading";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
-import { handleAuth } from "../utils/redux/reducers/reducers";
-// import { Pagination } from "../components/Pagination";
 
-interface TypeData {
-  key: string;
-  datas: [
-    {
-      title: string;
-      book_image: string;
-      status: boolean;
-      username: string;
-    }
-  ];
-}
+import { handleAuth } from "../utils/redux/reducers/reducers";
+import { CardCartBorrowBook } from "../components/Card";
+import { ButtonCart } from "../components/Button";
+import { Loading } from "../components/Loading";
+import { Layout } from "../components/Layout";
+import { TypeData } from "../utils/user";
 
 const CardBorrowBook: FC = () => {
-  const [datas, setDatas] = useState<TypeData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [visibleItems, setVisibleItems] = useState<TypeData[]>([]);
-
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
-
+  const [datas, setDatas] = useState<TypeData[]>([]);
   const [cookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const getToken = cookie.token;
 
-  const navigate = useNavigate();
+  const [visibleItems, setVisibleItems] = useState<TypeData[]>([]);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  document.title = `Cart | Book Management`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,8 +59,6 @@ const CardBorrowBook: FC = () => {
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-
-    // Show first few pages
     for (let i = 1; i <= 2; i++) {
       pageNumbers.push(
         <button
@@ -89,12 +75,6 @@ const CardBorrowBook: FC = () => {
         </button>
       );
     }
-
-    // Show ellipsis if there are more than 5 pages
-    if (totalPages > 5) {
-      pageNumbers.push(<span key="ellipsis">...</span>);
-    }
-
     return pageNumbers;
   };
 
@@ -156,8 +136,6 @@ const CardBorrowBook: FC = () => {
     }
   };
 
-  const username = "kristain09";
-
   const Headers = {
     headers: {
       Authorization: `Bearer ${getToken}`,
@@ -167,7 +145,6 @@ const CardBorrowBook: FC = () => {
 
   const handleBorrow = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(datas.length);
     if (datas.length === 0) {
       Swal.fire({
         icon: "error",

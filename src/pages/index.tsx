@@ -1,39 +1,33 @@
 import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { RootState } from "../utils/types/redux";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { Layout } from "../components/Layout";
-import { CardLanding } from "../components/Card";
-import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
-import { Loading } from "../components/Loading";
-import { handleAuth } from "../utils/redux/reducers/reducers";
+import { useSelector, useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import axios from "axios";
 
-interface DataType {
-  title: string;
-  book_image: string;
-  status: boolean;
-  username: string;
-}
+import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
+import { handleAuth } from "../utils/redux/reducers/reducers";
+import { RootState } from "../utils/types/redux";
+import { CardLanding } from "../components/Card";
+import { Loading } from "../components/Loading";
+import { LandingDataType } from "../utils/user";
+import { Layout } from "../components/Layout";
 
 const Home: FC = () => {
   const { isAvailabe } = useSelector((state: RootState) => state.data);
-  const [datas, setDatas] = useState<DataType[]>([]);
+  const [datas, setDatas] = useState<LandingDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [status, setStatus] = useState<boolean>();
   const [cookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
   const dispatch = useDispatch();
 
-  const checkToken = cookie.token;
-
+  const [visibleItems, setVisibleItems] = useState<LandingDataType[]>([]);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [visibleItems, setVisibleItems] = useState<DataType[]>([]);
 
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  document.title = `Home Page | User Management`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -67,8 +61,6 @@ const Home: FC = () => {
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-
-    // Show first few pages
     for (let i = 1; i <= 2; i++) {
       pageNumbers.push(
         <button
@@ -85,12 +77,6 @@ const Home: FC = () => {
         </button>
       );
     }
-
-    // Show ellipsis if there are more than 5 pages
-    if (totalPages > 5) {
-      pageNumbers.push(<span key="ellipsis">...</span>);
-    }
-
     return pageNumbers;
   };
 
@@ -123,6 +109,7 @@ const Home: FC = () => {
     fetchAllBook();
   }, []);
 
+  // untuk test jika tampilkan banyak pakai local storage dlu aja karena server not available
   // const fetchAllBook = () => {
   //   const keys = Object.keys(localStorage);
   //   const values = keys.map((key) => {
