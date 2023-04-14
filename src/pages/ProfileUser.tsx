@@ -6,22 +6,24 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserEdit } from "../utils/user";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const ProfileUser: FC = () => {
   const [objSubmit, setObjSubmit] = useState<Partial<UserEdit>>({});
   const [data, setData] = useState<Partial<UserEdit>>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [cookie] = useCookies(["token", "uname"]);
   const params = useParams();
   const navigate = useNavigate();
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+  let token = cookie.token;
+  console.log(token);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   function fetchData() {
-    const { username: uname } = params;
     axios
       .get(`users`)
       .then((response) => {
@@ -40,7 +42,7 @@ const ProfileUser: FC = () => {
     setObjSubmit(temp);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     const formData = new FormData();
     let key: keyof typeof objSubmit;
@@ -57,22 +59,38 @@ const ProfileUser: FC = () => {
       .then((response) => {
         const { message } = response.data;
         Swal.fire({
+          icon: "success",
           title: "Success",
           text: message,
           showCancelButton: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setIsEdit(false);
+            setObjSubmit({});
+            window.location.reload();
+          }
         });
-        setIsEdit(false);
-        setObjSubmit({});
       })
       .catch((error) => {
-        const { data } = error.response;
+        const { data } = error;
+        if (data === undefined) {
+          Swal.fire({
+            icon: "error",
+            title: "data is empty, Please fill etlist one",
+            showCancelButton: false,
+          });
+        }
         Swal.fire({
+          icon: "error",
           title: "Failed",
           text: data.message,
           showCancelButton: false,
+          showConfirmButton: true,
         });
       })
-      .finally(() => fetchData());
+      .finally(() => {
+        fetchData();
+      });
   }
 
   const handleDeleteAccount = () => {
@@ -93,6 +111,7 @@ const ProfileUser: FC = () => {
           })
           .then((response) => {
             const { message } = response.data;
+
             Swal.fire({
               title: "Success",
               text: message,
@@ -102,6 +121,7 @@ const ProfileUser: FC = () => {
           .catch((error) => {
             const { data } = error.response;
             Swal.fire({
+              icon: "error",
               title: "Failed",
               text: data.message,
               showCancelButton: false,
@@ -159,10 +179,8 @@ const ProfileUser: FC = () => {
                 className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
               >
                 <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all md:max-w-2xl md:w-full m-3 md:mx-auto">
-                  <form
-                    className="flex flex-col p-5 items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-large"
-                    onSubmit={(event) => handleSubmit(event)}
-                  >
+                  <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
+
                     <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
                       Update Profile
                     </h1>
@@ -254,6 +272,7 @@ const ProfileUser: FC = () => {
                         id="button-update-users"
                         type="submit"
                         className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                        onClick={(event) => handleSubmit(event)}
                       >
                         Update
                       </button>

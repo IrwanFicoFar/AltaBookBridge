@@ -1,11 +1,14 @@
 import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Layout } from "../components/Layout";
 import { CardLanding } from "../components/Card";
 import { ButtonBorrow, ButtonUnavailable } from "../components/Button";
 import { Loading } from "../components/Loading";
+import { handleAuth } from "../utils/redux/reducers/reducers";
+import { useCookies } from "react-cookie";
 
 interface DataType {
   title: string;
@@ -15,10 +18,15 @@ interface DataType {
 }
 
 const Home: FC = () => {
+  const { isAvailabe } = useSelector((state: RootState) => state.data);
   const [datas, setDatas] = useState<DataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [status, setStatus] = useState<boolean>();
+  const [cookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
+
+  const checkToken = cookie.token;
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -33,16 +41,16 @@ const Home: FC = () => {
 
       switch (true) {
         case screenWidth <= 480:
-          newItemsPerPage = 2;
-          break;
-        case screenWidth <= 768:
           newItemsPerPage = 4;
           break;
-        case screenWidth <= 1024:
+        case screenWidth <= 768:
           newItemsPerPage = 6;
           break;
-        default:
+        case screenWidth <= 1024:
           newItemsPerPage = 8;
+          break;
+        default:
+          newItemsPerPage = 12;
           break;
       }
 
@@ -114,15 +122,31 @@ const Home: FC = () => {
     fetchAllBook();
   }, []);
 
+  // const fetchAllBook = () => {
+  //   const keys = Object.keys(localStorage);
+  //   const values = keys.map((key) => {
+  //     const data = localStorage.getItem(key);
+
+  //     if (data) {
+  //       const parsedData = JSON.parse(data);
+  //       if (parsedData) {
+  //         return { ...parsedData, key };
+  //       }
+  //     }
+  //     return null;
+  //   });
+  //   setDatas(values.filter((data) => data !== null));
+  // };
+
   const fetchAllBook = () => {
     axios
       .get("/books")
       .then((response) => {
         const { data } = response.data;
         setDatas(data);
-
         setUsername(data[0].username);
         setStatus(data[0].status);
+        dispatch(handleAuth({ isAvailabe: data[0].status }));
       })
       .catch((error) => {
         const { message } = error.message;
@@ -133,15 +157,10 @@ const Home: FC = () => {
       });
   };
 
-  console.log(status);
-
-  // console.log(datas);
-
   const saveLocalStorage = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const userData = { datas };
     const uniqueKey = Date.now();
-    console.log(userData, uniqueKey);
     localStorage.setItem(uniqueKey.toString(), JSON.stringify(userData));
     Swal.fire({
       position: "top-end",
@@ -150,6 +169,7 @@ const Home: FC = () => {
       showConfirmButton: false,
       timer: 1500,
     });
+    dispatch(handleAuth({ isAvailabe: false }));
     setStatus(false);
   };
 
@@ -167,10 +187,16 @@ const Home: FC = () => {
               Title={data.title}
               Owner={data.username}
               KindOfHandle={
-                status ? (
-                  <ButtonBorrow onClick={(event) => saveLocalStorage(event)} />
+                checkToken ? (
+                  isAvailabe ? (
+                    <ButtonBorrow
+                      onClick={(event) => saveLocalStorage(event)}
+                    />
+                  ) : (
+                    <ButtonUnavailable />
+                  )
                 ) : (
-                  <ButtonUnavailable />
+                  <></>
                 )
               }
             />
@@ -218,7 +244,7 @@ const Home: FC = () => {
         {/* compnent pagination */}
         {/* klik pagination */}
         <div className="hidden md:block">
-          <div className="flex gap-2 items-center justify-end">
+          <div className="flex gap-2 items-center justify-end dark:text-gray-400">
             <label>Items per page:</label>
             <select
               value={itemsPerPage}

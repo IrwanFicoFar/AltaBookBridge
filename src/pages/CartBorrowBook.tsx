@@ -4,9 +4,11 @@ import { CardCartBorrowBook } from "../components/Card";
 import { ButtonCart } from "../components/Button";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { Loading } from "../components/Loading";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { handleAuth } from "../utils/redux/reducers/reducers";
 // import { Pagination } from "../components/Pagination";
 
 interface TypeData {
@@ -24,6 +26,7 @@ interface TypeData {
 const CardBorrowBook: FC = () => {
   const [datas, setDatas] = useState<TypeData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -39,20 +42,20 @@ const CardBorrowBook: FC = () => {
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
-      let newItemsPerPage = 8;
+      let newItemsPerPage = 4;
 
       switch (true) {
         case screenWidth <= 480:
-          newItemsPerPage = 2;
+          newItemsPerPage = 1;
           break;
         case screenWidth <= 768:
-          newItemsPerPage = 4;
+          newItemsPerPage = 2;
           break;
         case screenWidth <= 1024:
-          newItemsPerPage = 6;
+          newItemsPerPage = 3;
           break;
         default:
-          newItemsPerPage = 8;
+          newItemsPerPage = 4;
           break;
       }
 
@@ -165,14 +168,17 @@ const CardBorrowBook: FC = () => {
   const handleBorrow = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     axios.post(`users/checkout`, datas, Headers).then((response) => {
+      const { message } = response.data;
       Swal.fire({
         icon: "success",
         title: "Successfully",
+        text: message,
         showCancelButton: false,
         showConfirmButton: true,
       })
         .then((result) => {
           if (result.isConfirmed) {
+            handleAuth(true);
             localStorage.clear();
             navigate("/");
           }
@@ -203,6 +209,7 @@ const CardBorrowBook: FC = () => {
       .then((result) => {
         if (result.isConfirmed) {
           localStorage.removeItem(key);
+          dispatch(handleAuth({ isAvailabe: true }));
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
       })

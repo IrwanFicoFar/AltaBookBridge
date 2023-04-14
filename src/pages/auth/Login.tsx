@@ -53,6 +53,7 @@ const Login: FC = () => {
       .then((response) => {
         const { data, message } = response.data;
         Swal.fire({
+          icon: "success",
           title: "Success",
           text: message,
           showCancelButton: false,
