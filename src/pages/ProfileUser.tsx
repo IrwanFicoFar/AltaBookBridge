@@ -92,15 +92,15 @@ const ProfileUser: FC = () => {
         fetchData();
       });
   }
+
   const handleDeleteAccount = () => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You will not be able to recover your account!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -111,7 +111,12 @@ const ProfileUser: FC = () => {
           })
           .then((response) => {
             const { message } = response.data;
-            Swal.fire("Deleted!", "Your Acount has been deleted.", "success");
+
+            Swal.fire({
+              title: "Success",
+              text: message,
+              showCancelButton: false,
+            });
           })
           .catch((error) => {
             const { data } = error.response;
@@ -125,35 +130,38 @@ const ProfileUser: FC = () => {
       }
     });
   };
-
   return (
     <Layout>
       <div className="flex justify-center items-center bg-slate-100 dark:bg-slate-900">
         <div className="grid  md:max-w-60 lg:max-w-[100%] m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
           <form className="flex flex-col md:w-96 p-5 justify-center items-center shadow-lg bg-white gap-3 rounded-large dark:bg-@264653">
-            <div className="card w-48 h-48 bg-slate-300  rounded-full">
-              <div className="p-6">
+            <div className="card w-48 h-48">
+              <div className="p-6 bg-slate-300  rounded-full">
                 <img
                   src="./user_icon.png"
                   alt={`${data.username}'s profile picture`}
                   // src="./user_icon.png"
                   // alt=""
-                  className="h-36 w-36 border-spacing-5"
+                  className="h-36 w-36 border-spacing-1 rounded-full"
                 />
               </div>
             </div>
             <div>
               <div>
-                <p className="font-bold text-2xl">{data.name}</p>
+                <p className="font-bold text-2xl dark:text-white">
+                  {data.name}
+                </p>
               </div>
               <div>
-                <p className="font-bold text-lg">{data.username}</p>
+                <p className="font-bold text-lg dark:text-white">
+                  {data.username}
+                </p>
               </div>
             </div>
             <div className="flex w-full">
               <button
                 type="button"
-                className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-lg bg-@2A9D8F text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                 data-hs-overlay="#hs-medium-modal"
               >
                 Edit Profile
@@ -161,7 +169,7 @@ const ProfileUser: FC = () => {
               <button
                 id="button-delete-users"
                 type="button"
-                className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-lg bg-@E76F51 text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-@E76F51 dark:hover:bg-@F4A261 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                 onClick={() => handleDeleteAccount()}
               >
                 Delete
@@ -172,6 +180,7 @@ const ProfileUser: FC = () => {
               >
                 <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all md:max-w-2xl md:w-full m-3 md:mx-auto">
                   <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
+
                     <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
                       Update Profile
                     </h1>
@@ -179,16 +188,20 @@ const ProfileUser: FC = () => {
                       <div className="card h-32 w-32 md:w-48 md:h-48 bg-slate-300 rounded-full">
                         <div className="p-6">
                           <img
-                            src="./user_icon.png"
+                            src={
+                              objSubmit.image
+                                ? URL.createObjectURL(objSubmit.image)
+                                : "./user_icon.png"
+                            }
                             alt=""
-                            className="w-20 h-20 md:h-36 md:w-36 border-spacing-5"
+                            className="w-20 h-20 md:h-36 md:w-36 rounded-full"
                           />
                         </div>
                       </div>
                       <div className="">
                         <label className="block">
                           <span className="sr-only">Choose profile photo</span>
-                          <input
+                          <Input
                             type="file"
                             className="block text-sm text-gray-500
       file:mr-4 file:py-2 file:px-4
@@ -217,7 +230,7 @@ const ProfileUser: FC = () => {
                       </div>
                     </div>
                     <div className="w-full">
-                      <label className="font-bold ">Name</label>
+                      <label className="font-bold dark:text-white">Name</label>
                       <Input
                         placeholder="Insert your full name"
                         id="input-uname"
@@ -229,7 +242,9 @@ const ProfileUser: FC = () => {
                       />
                     </div>
                     <div className="w-full">
-                      <label className="font-bold">Username</label>
+                      <label className="font-bold dark:text-white">
+                        Username
+                      </label>
                       <Input
                         placeholder="Insert your username"
                         id="input-uname"
@@ -239,7 +254,9 @@ const ProfileUser: FC = () => {
                       />
                     </div>
                     <div className="w-full">
-                      <label className="font-bold">Password</label>
+                      <label className="font-bold dark:text-white">
+                        Password
+                      </label>
                       <Input
                         placeholder="Insert your password"
                         id="input-password"

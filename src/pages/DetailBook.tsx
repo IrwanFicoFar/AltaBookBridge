@@ -146,9 +146,9 @@ const UploadBook: FC = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center bg-slate-100">
+      <div className="flex justify-center items-center bg-slate-100 dark:bg-slate-800">
         <div className="grid  md:max-w-60 lg:max-w-[50%] col-span-2 m-5 md:m-10 justify-start items-center  dark:bg-slate-800  rounded-2xl">
-          <form className="flex flex-col p-5 justify-center items-center shadow-lg bg-white gap-3 rounded-large">
+          <form className="flex flex-col p-5 justify-center items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-large">
             <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
               Detail Books
             </h1>
@@ -162,18 +162,24 @@ const UploadBook: FC = () => {
               </div>
               <div className="flex flex-col">
                 <div className="w-full">
-                  <label className="font-bold">Title</label>
-                  <p className="uppercase font-bold text-xl">{data.title}</p>
+                  <label className="font-bold dark:text-white">Title</label>
+                  <p className="uppercase font-bold text-xl dark:text-white">
+                    {data.title}
+                  </p>
                 </div>
                 <div className="w-full h-60">
-                  <label className="font-bold">Description</label>
-                  <p className="text-sm leading-4">{data.description}</p>
+                  <label className="font-bold dark:text-white">
+                    Description
+                  </label>
+                  <p className="text-sm leading-4 dark:text-white">
+                    {data.description}
+                  </p>
                 </div>
                 <div className="flex w-full">
                   {checkUname === username && checkToken ? (
                     <button
                       type="button"
-                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                      className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-md bg-@2A9D8F text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                       data-hs-overlay="#hs-medium-modal"
                       onClick={() => handleChangeEdith()}
                     >
@@ -185,7 +191,7 @@ const UploadBook: FC = () => {
                   {checkUname === username && checkToken ? (
                     <button
                       type="button"
-                      className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
+                      className="py-2 px-4 m-2 w-full justify-center items-center gap-2 rounded-md border text-md bg-@E76F51 text-white font-bold shadow-sm align-middle hover:scale-105 focus:outline-none   transition-all text-md dark:bg-@E76F51 dark:hover:bg-@F4A261 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                       onClick={() => handleDeleteBook()}
                     >
                       Delete
@@ -199,7 +205,7 @@ const UploadBook: FC = () => {
                       className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
                     >
                       <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all md:max-w-2xl md:w-full m-3 md:mx-auto">
-                        <form className="flex flex-col p-5 items-center shadow-lg bg-white gap-3 rounded-large">
+                        <form className="flex flex-col p-5 items-center shadow-lg bg-white dark:bg-@264653 gap-3 rounded-large">
                           <h1 className="uppercase font-bold text-3xl text-back dark:text-white">
                             Update Books
                           </h1>
@@ -207,9 +213,15 @@ const UploadBook: FC = () => {
                             <div className="">
                               <div className="p-2">
                                 <img
-                                  src="./download.jpeg"
+                                  src={
+                                    bookSubmit.book_image
+                                      ? URL.createObjectURL(
+                                          bookSubmit.book_image
+                                        )
+                                      : "./download.jpeg"
+                                  }
                                   alt=""
-                                  className="w-auto h-80 rounded-[5%]"
+                                  className="w-64 h-80 rounded-[5%]"
                                 />
                               </div>
                               <div className="p-2 w-40">
@@ -219,7 +231,13 @@ const UploadBook: FC = () => {
                                   </span>
                                   <Input
                                     type="file"
-                                    className=" w-fit block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-@2A9D8F file:text-white hover:file:bg-@1F7168"
+                                    className="block text-sm text-gray-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-md file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-@2A9D8F file:text-white
+                                    hover:file:bg-@1F7168
+                                  "
                                     onChange={(event) => {
                                       if (!event.currentTarget.files) {
                                         return;
@@ -241,7 +259,9 @@ const UploadBook: FC = () => {
                             </div>
                             <div className="flex flex-col justify-center items-center">
                               <div className="w-full">
-                                <label className="font-bold">Title</label>
+                                <label className="font-bold dark:text-white">
+                                  Title
+                                </label>
                                 <Input
                                   placeholder="Insert title book"
                                   id="title_book"
@@ -253,7 +273,9 @@ const UploadBook: FC = () => {
                                 />
                               </div>
                               <div className="w-full py-3 ">
-                                <label className="font-bold">Description</label>
+                                <label className="font-bold dark:text-white">
+                                  Description
+                                </label>
                                 <TextArea
                                   placeholder="Book's descriptions...."
                                   id="desc_book"
