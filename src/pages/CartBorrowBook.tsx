@@ -240,11 +240,11 @@ const CardBorrowBook: FC = () => {
             </div>
             <div className=" grid grid-cols-1 justify-center">
               <div className="p-6 px-8 py-10 sm:py-14 md:py-18 sm:px-20 md:px-40 md-to-lg:px-14 lg:px-15 xl:px-5 2xl:px-20  flex flex-col">
-                <div className=" bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md flex flex-col justify-between">
+                <div className=" bg-@EFF1F3 p-10 xl:mx-32 rounded-yes drop-shadow-md flex flex-col justify-between dark:bg-slate-700">
                   <h3 className="text-lg font-bold text-@264653 dark:text-white">
                     Final Proccess to Borrow
                   </h3>
-                  <p className="mt-2 text-@264653">
+                  <p className="mt-2 text-@264653 dark:text-slate-50">
                     Check each items, to make sure all you borrow in bucket. if
                     you done, then click below to proccess
                   </p>

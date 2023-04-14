@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, FormEvent, CSSProperties } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { RootState } from "../utils/types/redux";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Layout } from "../components/Layout";
