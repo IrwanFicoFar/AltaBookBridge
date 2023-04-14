@@ -167,6 +167,17 @@ const CardBorrowBook: FC = () => {
 
   const handleBorrow = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    console.log(datas.length);
+    if (datas.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "cart is empty, add some book please",
+        showCancelButton: false,
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     axios.post(`users/checkout`, datas, Headers).then((response) => {
       const { message } = response.data;
       Swal.fire({
