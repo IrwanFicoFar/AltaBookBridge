@@ -127,7 +127,6 @@ const Home: FC = () => {
   //   const keys = Object.keys(localStorage);
   //   const values = keys.map((key) => {
   //     const data = localStorage.getItem(key);
-
   //     if (data) {
   //       const parsedData = JSON.parse(data);
   //       if (parsedData) {
