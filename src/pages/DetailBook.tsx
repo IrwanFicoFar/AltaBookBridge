@@ -1,31 +1,31 @@
 import { FC, useEffect, useState, FormEvent } from "react";
-import { Layout } from "../components/Layout";
 import { useNavigate } from "react-router-dom";
-import { Input, TextArea } from "../components/Input";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { BookType } from "../utils/user";
-import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import axios from "axios";
+
+import { Input, TextArea } from "../components/Input";
+import { Layout } from "../components/Layout";
+import { BookType } from "../utils/user";
 
 const UploadBook: FC = () => {
-  const [cookie] = useCookies(["token", "uname"]);
   const [falseUsername, setFalseUsername] = useState<boolean>(false);
-  const checkToken = cookie.token;
-  // const checkUname = cookie.uname;
   const [bookSubmit, setBookSubmit] = useState<Partial<BookType>>({});
   const [data, setData] = useState<Partial<BookType>>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [cookie] = useCookies(["token", "uname"]);
+  const checkToken = cookie.token;
   const params = useParams();
   const navigate = useNavigate();
+
+  document.title = `Detail Book | Book Management`;
 
   const checkUname = "username123";
 
   //karena balikan uname undefined, jdi gk bisa dipakai dlu skema ini,ini hanya contoh saja
   const { username } = params;
-  console.log(username, checkUname);
-
-  // untuk contoh restriksinya pakai token aja
+  // untuk contoh restriksinya pakai token aja jadinya
 
   useEffect(() => {
     setFalseUsername(true);
@@ -120,8 +120,7 @@ const UploadBook: FC = () => {
               Authorization: "",
             },
           })
-          .then((response) => {
-            const { message } = response.data;
+          .then(() => {
             Swal.fire("Deleted!", "Your file has been deleted.", "success");
           })
           .catch((error) => {

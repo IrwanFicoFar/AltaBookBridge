@@ -1,17 +1,14 @@
 import { FC, useState, useEffect, FormEvent } from "react";
-import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
 import Swal from "sweetalert2";
+import axios from "axios";
+
+import { Layout } from "../../components/Layout";
+import { Input } from "../../components/Input";
 import { useDispatch } from "react-redux";
 import { handleAuth } from "../../utils/redux/reducers/reducers";
-
-interface ObjSubmitType {
-  username: string;
-  password: string;
-}
+import { ObjSubmitType } from "../../utils/user";
 
 const Login: FC = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -21,11 +18,9 @@ const Login: FC = () => {
   });
   const [, setCookie] = useCookies(["token", "uname"]);
   const [isDisabled, setIsDisabled] = useState(true);
-
+  document.title = `Login | User Management`;
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-  // const [, setCookie] = useCookies();
 
   useEffect(() => {
     const handleResize = () => {
