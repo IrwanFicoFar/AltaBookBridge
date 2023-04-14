@@ -28,16 +28,16 @@ const ListMyBook: FC = () => {
 
       switch (true) {
         case screenWidth <= 480:
-          newItemsPerPage = 2;
-          break;
-        case screenWidth <= 768:
           newItemsPerPage = 4;
           break;
-        case screenWidth <= 1024:
+        case screenWidth <= 768:
           newItemsPerPage = 6;
           break;
-        default:
+        case screenWidth <= 1024:
           newItemsPerPage = 8;
+          break;
+        default:
+          newItemsPerPage = 12;
           break;
       }
 

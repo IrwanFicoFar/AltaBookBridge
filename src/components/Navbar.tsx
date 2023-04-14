@@ -15,7 +15,6 @@ export const Navbar: FC = () => {
   const [cookie, , removeCookie] = useCookies(["token", "uname"]);
   const dispatch = useDispatch();
   const checkToken = cookie.token;
-  const getUname = cookie.uname;
   const navigate = useNavigate();
   const handleTheme = (mode: string) => {
     setTheme(mode);
@@ -32,12 +31,10 @@ export const Navbar: FC = () => {
       confirmButtonText: "Yes, Log Out!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setTimeout(() => {
-          removeCookie("token");
-          removeCookie("uname");
-        }, 100);
         localStorage.clear();
         dispatch(handleAuth(false));
+        removeCookie("token", { path: "/" });
+        removeCookie("uname", { path: "/" });
         Swal.fire({
           position: "top-end",
           icon: "success",

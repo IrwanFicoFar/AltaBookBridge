@@ -9,14 +9,23 @@ import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 
 const UploadBook: FC = () => {
-  const [cookie] = useCookies(["token"]);
+  const [cookie] = useCookies(["token", "uname"]);
   const [falseUsername, setFalseUsername] = useState<boolean>(false);
   const checkToken = cookie.token;
+  // const checkUname = cookie.uname;
   const [bookSubmit, setBookSubmit] = useState<Partial<BookType>>({});
   const [data, setData] = useState<Partial<BookType>>({});
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const params = useParams();
   const navigate = useNavigate();
+
+  const checkUname = "username123";
+
+  //karena balikan uname undefined, jdi gk bisa dipakai dlu skema ini,ini hanya contoh saja
+  const { username } = params;
+  console.log(username, checkUname);
+
+  // untuk contoh restriksinya pakai token aja
 
   useEffect(() => {
     setFalseUsername(true);
@@ -49,20 +58,10 @@ const UploadBook: FC = () => {
     event.preventDefault();
 
     const formData = new FormData();
-
-    if (formData === undefined) {
-      Swal.fire({
-        icon: "warning",
-        title: "Please fill edit min 1 ",
-      });
-      return;
-    }
-
     let key: keyof typeof bookSubmit;
     for (key in bookSubmit) {
       formData.append(key, bookSubmit[key] as string);
     }
-    console.log(formData);
     axios
       .put("/books/booksID", formData, {
         headers: {
@@ -81,13 +80,20 @@ const UploadBook: FC = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             setBookSubmit({});
-            window.location.reload();
             handleChangeEdithFalse();
+            window.location.reload();
           }
         });
       })
       .catch((error) => {
-        const { data } = error.response;
+        const { data } = error;
+        if (data === undefined) {
+          Swal.fire({
+            icon: "error",
+            title: "data is empty, Please fill etlist one",
+            showCancelButton: false,
+          });
+        }
         Swal.fire({
           icon: "error",
           title: "Failed",
@@ -121,6 +127,7 @@ const UploadBook: FC = () => {
           .catch((error) => {
             const { data } = error.response;
             Swal.fire({
+              icon: "error",
               title: "Failed",
               text: data.message,
               showCancelButton: false,
@@ -163,7 +170,7 @@ const UploadBook: FC = () => {
                   <p className="text-sm leading-4">{data.description}</p>
                 </div>
                 <div className="flex w-full">
-                  {checkToken ? (
+                  {checkUname === username && checkToken ? (
                     <button
                       type="button"
                       className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@2A9D8F text-white hover:bg-@1F7168 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"
@@ -175,7 +182,7 @@ const UploadBook: FC = () => {
                   ) : (
                     <></>
                   )}
-                  {checkToken ? (
+                  {checkUname === username && checkToken ? (
                     <button
                       type="button"
                       className="py-2 px-4 m-2 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-@E76F51 text-white hover:bg-@F4A261 focus:outline-none   transition-all text-sm dark:focus:ring-offset-gray-800"

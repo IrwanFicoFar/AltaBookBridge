@@ -47,12 +47,13 @@ const Register: FC = () => {
       .then((response) => {
         const { data, message } = response.data;
         Swal.fire({
+          icon: "success",
           title: "Success",
           text: message,
           showCancelButton: false,
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate("/register");
+            navigate("/login");
           }
         });
       })
